@@ -4,28 +4,27 @@
 
 ### 空服跳转
 ```lua
-loadstring(game:HttpGet("https://hygg520.github.io/hygg/空服跳转.txt"))()
+loadstring(game:HttpGet("loadstring(game:HttpGet("https://raw.githubusercontent.com/hygg520/hygg/refs/heads/main/空服跳转.txt"))()"))()
 ```
 
 ### 飞行
 
 ```lua
-loadstring(game:HttpGet("https://hygg520.github.io/hygg/飞行.txt"))()
+loadstring(game:HttpGet("loadstring(game:HttpGet("https://raw.githubusercontent.com/hygg520/hygg/refs/heads/main/飞行.txt"))()"))()
 ```
 
 ### 甩飞所有
 
 ```lua
-loadstring(game:HttpGet("https://hygg520.github.io/hygg/甩飞所有.txt"))()
+loadstring(game:HttpGet("loadstring(game:HttpGet("https://raw.githubusercontent.com/hygg520/hygg/refs/heads/main/甩飞所有.txt"))()"))()
 ```
-
 ### 隐身
 
 ```lua
-loadstring(game:HttpGet("https://hygg520.github.io/hygg/隐身.txt"))()
+loadstring(game:HttpGet("loadstring(game:HttpGet("https://raw.githubusercontent.com/hygg520/hygg/refs/heads/main/隐身.txt"))()"))()
 ```
 ### 自动翻译
 
 ```lua
-loadstring(game:HttpGet("https://hygg520.github.io/hygg/自动翻译.txt"))()
+loadstring(game:HttpGet("loadstring(game:HttpGet("https://raw.githubusercontent.com/hygg520/hygg/refs/heads/main/自动翻译.txt"))()"))()
 ```
