@@ -1,0 +1,233 @@
+local HttpService = game:GetService("HttpService")
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local CoreGui = game:GetService("CoreGui")
+local LocalPlayer = Players.LocalPlayer
+
+local WindUI = loadstring(game:HttpGet("https://hygg520.github.io/1/main.txt"))()
+
+local Window = WindUI:CreateWindow({
+    Title = "自动翻译",
+    Icon = "",
+    IconThemed = true,
+    Author = "",
+    Folder = "自动翻译",
+    Size = UDim2.fromOffset(520, 340),
+    Transparent = true,
+    Theme = "Dark",
+    SideBarWidth = 0,
+    ScrollBarEnabled = true,
+})
+
+Window:EditOpenButton({
+    Title = "自动翻译",
+    Icon = "",
+    CornerRadius = UDim.new(0, 16),
+    StrokeThickness = 2,
+    Color = ColorSequence.new(
+        Color3.fromHex("FF0F7B"),
+        Color3.fromHex("F89B29")
+    ),
+    Draggable = true,
+})
+
+local translationEnabled = false
+local translationSpeed = 2
+local translatedTexts = {}
+local originalTexts = {}
+local heartbeatConnection = nil
+local playerGuiConnection = nil
+local coreGuiConnection = nil
+
+local function translateText(text)
+    if not text or text == "" or #text < 2 then
+        return nil
+    end
+    if translatedTexts[text] then
+        return translatedTexts[text]
+    end
+    local success, result = pcall(function()
+        local url = "https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=zh-CN&dt=t&q=" .. HttpService:UrlEncode(text)
+        local response = game:HttpGet(url)
+        local decoded = HttpService:JSONDecode(response)
+        if decoded and decoded[1] and decoded[1][1] and decoded[1][1][1] then
+            return decoded[1][1][1]
+        end
+        return nil
+    end)
+    if success and result then
+        translatedTexts[text] = result
+        return result
+    end
+    return nil
+end
+
+local function isEnglish(text)
+    if not text or text == "" then
+        return false
+    end
+    local englishCount = 0
+    local totalCount = 0
+    for char in text:gmatch(".") do
+        local byte = string.byte(char)
+        if byte then
+            totalCount = totalCount + 1
+            if (byte >= 65 and byte <= 90) or (byte >= 97 and byte <= 122) then
+                englishCount = englishCount + 1
+            end
+        end
+    end
+    if totalCount == 0 then
+        return false
+    end
+    return (englishCount / totalCount) > 0.5
+end
+
+local function processTextObject(textObject)
+    if not translationEnabled then
+        return
+    end
+    if not textObject:IsA("TextLabel") and not textObject:IsA("TextButton") and not textObject:IsA("TextBox") then
+        return
+    end
+    local originalText = textObject.Text
+    if not originalText or originalText == "" then
+        return
+    end
+    if not isEnglish(originalText) then
+        return
+    end
+    local translatedText = translateText(originalText)
+    if translatedText and translatedText ~= originalText then
+        if not originalTexts[textObject] then
+            originalTexts[textObject] = originalText
+        end
+        textObject.Text = translatedText
+    end
+end
+
+local function scanAndTranslate(parent)
+    if not translationEnabled then
+        return
+    end
+    for _, descendant in pairs(parent:GetDescendants()) do
+        if descendant:IsA("TextLabel") or descendant:IsA("TextButton") or descendant:IsA("TextBox") then
+            task.spawn(function()
+                processTextObject(descendant)
+            end)
+        end
+    end
+end
+
+local function onDescendantAdded(descendant)
+    if not translationEnabled then
+        return
+    end
+    if descendant:IsA("TextLabel") or descendant:IsA("TextButton") or descendant:IsA("TextBox") then
+        task.delay(0.1, function()
+            processTextObject(descendant)
+        end)
+    end
+end
+
+local function startTranslation()
+    if playerGuiConnection then
+        playerGuiConnection:Disconnect()
+    end
+    if coreGuiConnection then
+        coreGuiConnection:Disconnect()
+    end
+    if heartbeatConnection then
+        heartbeatConnection:Disconnect()
+    end
+    local PlayerGui = LocalPlayer:WaitForChild("PlayerGui")
+    playerGuiConnection = PlayerGui.DescendantAdded:Connect(onDescendantAdded)
+    coreGuiConnection = CoreGui.DescendantAdded:Connect(onDescendantAdded)
+    local lastScanTime = tick()
+    local scanInterval = 1 / translationSpeed
+    heartbeatConnection = RunService.Heartbeat:Connect(function()
+        if not translationEnabled then
+            return
+        end
+        local currentTime = tick()
+        if currentTime - lastScanTime >= scanInterval then
+            lastScanTime = currentTime
+            task.spawn(function()
+                scanAndTranslate(PlayerGui)
+            end)
+            pcall(function()
+                for _, gui in pairs(CoreGui:GetChildren()) do
+                    if gui:IsA("ScreenGui") then
+                        task.spawn(function()
+                            scanAndTranslate(gui)
+                        end)
+                    end
+                end
+            end)
+        end
+    end)
+    scanAndTranslate(PlayerGui)
+    pcall(function()
+        for _, gui in pairs(CoreGui:GetChildren()) do
+            if gui:IsA("ScreenGui") then
+                scanAndTranslate(gui)
+            end
+        end
+    end)
+end
+
+local function stopTranslation()
+    for textObject, originalText in pairs(originalTexts) do
+        if textObject and textObject.Parent then
+            textObject.Text = originalText
+        end
+    end
+    originalTexts = {}
+    
+    if playerGuiConnection then
+        playerGuiConnection:Disconnect()
+        playerGuiConnection = nil
+    end
+    if coreGuiConnection then
+        coreGuiConnection:Disconnect()
+        coreGuiConnection = nil
+    end
+    if heartbeatConnection then
+        heartbeatConnection:Disconnect()
+        heartbeatConnection = nil
+    end
+end
+
+local MainTab = Window:Tab({ Title = "主要" })
+
+MainTab:Paragraph({
+    Title = "自动翻译",
+    Desc = "请先加载此脚本开启翻译再加载你需要翻译的脚本\n特殊UI无法翻译",
+})
+
+MainTab:Toggle({
+    Title = "自动翻译",
+    Value = false,
+    Callback = function(state)
+        translationEnabled = state
+        if translationEnabled then
+            startTranslation()
+        else
+            stopTranslation()
+        end
+    end
+})
+
+MainTab:Slider({
+    Title = "翻译速度",
+    Value = {
+        Min = 1,
+        Max = 10,
+        Default = 2,
+    },
+    Callback = function(value)
+        translationSpeed = value
+    end
+})
+
+Window:SelectTab(1)
