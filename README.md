@@ -28,3 +28,8 @@ loadstring(game:HttpGet("loadstring(game:HttpGet("https://raw.githubusercontent.
 ```lua
 loadstring(game:HttpGet("loadstring(game:HttpGet("https://raw.githubusercontent.com/hygg520/hygg/refs/heads/main/自动翻译.txt"))()"))()
 ```
+### 穿墙
+
+```lua
+loadstring(game:HttpGet("loadstring(game:HttpGet("https://raw.githubusercontent.com/hygg520/hygg/refs/heads/main/穿墙.txt"))()"))()
+```
