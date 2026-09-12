@@ -1,1 +1,205 @@
-local Players = game:GetService("Players") local player = Players.LocalPlayer local INVIS_POS = Vector3.new(-25.95, 84, 3537.55) local invis = false local invisSeat local gui = Instance.new("ScreenGui") gui.ResetOnSpawn = false gui.Parent = player:WaitForChild("PlayerGui") local button = Instance.new("TextButton") button.Size = UDim2.fromOffset(140, 44) button.Position = UDim2.fromScale(0.5, 0.5) button.AnchorPoint = Vector2.new(0.5, 0.5) button.BackgroundColor3 = Color3.fromRGB(0, 170, 0) button.Text = "隐身" button.TextColor3 = Color3.fromRGB(255, 255, 255) button.Font = Enum.Font.GothamBold button.TextSize = 18 button.Parent = gui button.Active = true button.Draggable = true Instance.new("UICorner", button).CornerRadius = UDim.new(0, 12) local stroke = Instance.new("UIStroke", button) stroke.Thickness = 2 stroke.Color = Color3.fromRGB(0, 200, 0) local function setTransparency(char, value) for _, v in ipairs(char:GetDescendants()) do if v:IsA("BasePart") or v:IsA("Decal") then v.Transparency = value end end end local function toggleInvisible() local char = player.Character if not char then return end local hrp = char:FindFirstChild("HumanoidRootPart") if not hrp then return end invis = not invis if invis then local savedCF = hrp.CFrame char:MoveTo(INVIS_POS) task.wait(0.15) invisSeat = Instance.new("Seat") invisSeat.Name = "invischair" invisSeat.Transparency = 1 invisSeat.Anchored = false invisSeat.CanCollide = false invisSeat.CFrame = CFrame.new(INVIS_POS) invisSeat.Parent = workspace local weld = Instance.new("Weld") weld.Part0 = invisSeat weld.Part1 = char:FindFirstChild("Torso") or char:FindFirstChild("UpperTorso") weld.Parent = invisSeat task.wait() invisSeat.CFrame = savedCF setTransparency(char, 0.5) button.Text = "可见" button.BackgroundColor3 = Color3.fromRGB(200, 0, 0) stroke.Color = Color3.fromRGB(255, 50, 50) else if invisSeat then invisSeat:Destroy() invisSeat = nil end setTransparency(char, 0) button.Text = "隐身" button.BackgroundColor3 = Color3.fromRGB(0, 170, 0) stroke.Color = Color3.fromRGB(0, 200, 0) end end button.MouseButton1Click:Connect(toggleInvisible)
+--!strict
+local CONFIG={TOGGLE_KEY=Enum.KeyCode.X,DEFAULT_SPEED=16,INVISIBILITY_POSITION=Vector3.new(-25.95,84,3537.55),ANTI_PULLBACK_SPEED=100}
+type PlayerState={isInvisible:boolean,isSpeedBoosted:boolean,originalSpeed:number}
+local Players=game:GetService("Players")
+local UserInputService=game:GetService("UserInputService")
+local RunService=game:GetService("RunService")
+local player=Players.LocalPlayer
+local playerState:PlayerState={isInvisible=false,isSpeedBoosted=false,originalSpeed=CONFIG.DEFAULT_SPEED}
+local antiPullbackConn:RBXScriptConnection?=nil
+local ScreenGui=Instance.new("ScreenGui")
+local Frame=Instance.new("Frame")
+local Frame_2=Instance.new("Frame")
+local TextLabel=Instance.new("TextLabel")
+local InvisButton=Instance.new("TextButton")
+local SpeedButton=Instance.new("TextButton")
+local CloseButton=Instance.new("TextButton")
+local MinimizeButton=Instance.new("TextButton")
+ScreenGui.Parent=player:WaitForChild("PlayerGui")
+ScreenGui.ZIndexBehavior=Enum.ZIndexBehavior.Sibling
+ScreenGui.ResetOnSpawn=false
+ScreenGui.DisplayOrder=10000000
+ScreenGui.IgnoreGuiInset=true
+Frame.Parent=ScreenGui
+Frame.BackgroundColor3=Color3.fromRGB(34,34,34)
+Frame.BorderColor3=Color3.fromRGB(0,0,0)
+Frame.BorderSizePixel=0
+Frame.Position=UDim2.new(0.388539821,0,0.427821517,0)
+Frame.Size=UDim2.new(0,158,0,110)
+Frame.Active=true
+Frame.Draggable=true
+Frame_2.Parent=Frame
+Frame_2.BackgroundColor3=Color3.fromRGB(50,50,50)
+Frame_2.BorderColor3=Color3.fromRGB(0,0,0)
+Frame_2.BorderSizePixel=0
+Frame_2.Size=UDim2.new(0,158,0,25)
+TextLabel.Parent=Frame_2
+TextLabel.BackgroundColor3=Color3.fromRGB(255,255,255)
+TextLabel.BackgroundTransparency=1.000
+TextLabel.BorderColor3=Color3.fromRGB(0,0,0)
+TextLabel.BorderSizePixel=0
+TextLabel.Position=UDim2.new(0.112792775,0,-0.0151660154,0)
+TextLabel.Size=UDim2.new(0,121,0,26)
+TextLabel.Font=Enum.Font.Sarpanch
+TextLabel.Text="隐身工具"
+TextLabel.TextColor3=Color3.fromRGB(255,255,255)
+TextLabel.TextSize=25.000
+InvisButton.Parent=Frame
+InvisButton.BackgroundColor3=Color3.fromRGB(200,200,200)
+InvisButton.BorderColor3=Color3.fromRGB(0,0,0)
+InvisButton.BorderSizePixel=0
+InvisButton.Position=UDim2.new(0.113924049,0,0.3,0)
+InvisButton.Size=UDim2.new(0,121,0,32)
+InvisButton.Font=Enum.Font.SourceSansItalic
+InvisButton.Text="隐身"
+InvisButton.TextColor3=Color3.fromRGB(0,0,0)
+InvisButton.TextSize=20.000
+SpeedButton.Parent=Frame
+SpeedButton.BackgroundColor3=Color3.fromRGB(200,200,200)
+SpeedButton.BorderColor3=Color3.fromRGB(0,0,0)
+SpeedButton.BorderSizePixel=0
+SpeedButton.Position=UDim2.new(0.113924049,0,0.64,0)
+SpeedButton.Size=UDim2.new(0,121,0,32)
+SpeedButton.Font=Enum.Font.SourceSansItalic
+SpeedButton.Text="加速"
+SpeedButton.TextColor3=Color3.fromRGB(0,0,0)
+SpeedButton.TextSize=20.000
+CloseButton.Parent=Frame
+CloseButton.Name="CloseButton"
+CloseButton.Size=UDim2.new(0,25,0,25)
+CloseButton.Position=UDim2.new(1,-25,0,0)
+CloseButton.Text="X"
+CloseButton.BackgroundColor3=Color3.fromRGB(231,76,60)
+CloseButton.TextColor3=Color3.fromRGB(255,255,255)
+CloseButton.Font=Enum.Font.GothamBold
+CloseButton.TextSize=16
+CloseButton.BorderSizePixel=0
+MinimizeButton.Parent=Frame
+MinimizeButton.Name="MinimizeButton"
+MinimizeButton.Size=UDim2.new(0,25,0,25)
+MinimizeButton.Position=UDim2.new(0,0,0,0)
+MinimizeButton.Text="-"
+MinimizeButton.BackgroundColor3=Color3.fromRGB(45,45,45)
+MinimizeButton.TextColor3=Color3.fromRGB(255,255,255)
+MinimizeButton.Font=Enum.Font.GothamBold
+MinimizeButton.TextSize=22
+MinimizeButton.BorderSizePixel=0
+local function setCharacterTransparency(character:Model,transparency:number):()
+	for _,descendant in character:GetDescendants() do
+		if descendant:IsA("BasePart") or descendant:IsA("Decal") then
+			descendant.Transparency=transparency
+		end
+	end
+end
+local function getHumanoid():Humanoid?
+	local character=player.Character
+	if not character then return nil end
+	return character:FindFirstChild("Humanoid")::Humanoid?
+end
+local function getHumanoidRootPart():BasePart?
+	local character=player.Character
+	if not character then return nil end
+	return character:FindFirstChild("HumanoidRootPart")::BasePart?
+end
+local function startAntiPullback():()
+	if antiPullbackConn then antiPullbackConn:Disconnect() antiPullbackConn=nil end
+	antiPullbackConn=RunService.Heartbeat:Connect(function()
+		local character=player.Character
+		if not character then return end
+		local humanoid=character:FindFirstChildOfClass("Humanoid")
+		local root=character:FindFirstChild("HumanoidRootPart")
+		if not humanoid or not root then return end
+		if humanoid.MoveDirection.Magnitude>0 then
+			character:TranslateBy(humanoid.MoveDirection*CONFIG.ANTI_PULLBACK_SPEED/20)
+		end
+	end)
+end
+local function stopAntiPullback():()
+	if antiPullbackConn then antiPullbackConn:Disconnect() antiPullbackConn=nil end
+end
+local function toggleInvisibility():()
+	if not player.Character then return end
+	playerState.isInvisible=not playerState.isInvisible
+	if playerState.isInvisible then
+		local humanoidRootPart=getHumanoidRootPart()
+		if not humanoidRootPart then return end
+		local savedPosition=humanoidRootPart.CFrame
+		player.Character:MoveTo(CONFIG.INVISIBILITY_POSITION)
+		task.wait(0.15)
+		local seat=Instance.new("Seat")
+		seat.Name="invischair"
+		seat.Anchored=false
+		seat.CanCollide=false
+		seat.Transparency=1
+		seat.Position=CONFIG.INVISIBILITY_POSITION
+		seat.Parent=workspace
+		local weld=Instance.new("Weld")
+		weld.Part0=seat
+		weld.Part1=player.Character:FindFirstChild("Torso") or player.Character:FindFirstChild("UpperTorso")
+		weld.Parent=seat
+		task.wait()
+		seat.CFrame=savedPosition
+		setCharacterTransparency(player.Character,0.5)
+		InvisButton.Text="显示"
+	else
+		local invisChair=workspace:FindFirstChild("invischair")
+		if invisChair then invisChair:Destroy() end
+		if player.Character then setCharacterTransparency(player.Character,0) end
+		InvisButton.Text="隐身"
+	end
+end
+local function toggleSpeedBoost():()
+	playerState.isSpeedBoosted=not playerState.isSpeedBoosted
+	if playerState.isSpeedBoosted then
+		startAntiPullback()
+		SpeedButton.Text="关闭加速"
+	else
+		stopAntiPullback()
+		SpeedButton.Text="加速"
+	end
+end
+local function resetPlayerState():()
+	playerState.isInvisible=false
+	playerState.isSpeedBoosted=false
+	stopAntiPullback()
+	if InvisButton then InvisButton.Text="隐身" end
+	if SpeedButton then SpeedButton.Text="加速" end
+end
+InvisButton.MouseButton1Click:Connect(toggleInvisibility)
+SpeedButton.MouseButton1Click:Connect(toggleSpeedBoost)
+CloseButton.MouseButton1Click:Connect(function()
+	ScreenGui.Enabled=false
+end)
+local minimized=false
+MinimizeButton.MouseButton1Click:Connect(function()
+	minimized=not minimized
+	if minimized then
+		Frame.Size=UDim2.new(0,158,0,25)
+		InvisButton.Visible=false
+		SpeedButton.Visible=false
+		MinimizeButton.Text="+"
+	else
+		Frame.Size=UDim2.new(0,158,0,110)
+		InvisButton.Visible=true
+		SpeedButton.Visible=true
+		MinimizeButton.Text="-"
+	end
+end)
+UserInputService.InputBegan:Connect(function(input:InputObject,gameProcessed:boolean)
+	if gameProcessed then return end
+	if input.KeyCode==CONFIG.TOGGLE_KEY then toggleInvisibility() end
+end)
+player.CharacterAdded:Connect(function(character:Model)
+	resetPlayerState()
+	local humanoid=character:WaitForChild("Humanoid")::Humanoid
+	playerState.originalSpeed=humanoid.WalkSpeed
+	local invisChair=workspace:FindFirstChild("invischair")
+	if invisChair then invisChair:Destroy() end
+end)
+Players.PlayerRemoving:Connect(function(leavingPlayer:Player)
+	if leavingPlayer==player then
+		local invisChair=workspace:FindFirstChild("invischair")
+		if invisChair then invisChair:Destroy() end
+		stopAntiPullback()
+	end
+end)
