@@ -32,7 +32,7 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/hygg520/hygg/refs/hea
 loadstring(game:HttpGet("https://raw.githubusercontent.com/hygg520/hygg/refs/heads/main/穿墙.txt"))()
 ```
 
-### 穿墙
+### 碰飞
 ```lua
 loadstring(game:HttpGet("https://raw.githubusercontent.com/hygg520/hygg/refs/heads/main/碰飞.txt"))()
 ```
