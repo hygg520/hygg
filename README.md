@@ -36,3 +36,15 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/hygg520/hygg/refs/hea
 ```lua
 loadstring(game:HttpGet("https://raw.githubusercontent.com/hygg520/hygg/refs/heads/main/碰飞.txt"))()
 ```
+
+### 动画包
+
+#### 阿迪达斯
+```lua
+loadstring(game:HttpGet("https://raw.githubusercontent.com/hygg520/hygg/refs/heads/main/动画包/阿迪达斯.txt"))()
+```
+
+#### 僵尸
+```lua
+loadstring(game:HttpGet("https://raw.githubusercontent.com/hygg520/hygg/refs/heads/main/动画包/僵尸.txt"))()
+```
