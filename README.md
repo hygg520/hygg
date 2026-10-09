@@ -42,6 +42,11 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/hygg520/hygg/refs/hea
 loadstring(game:HttpGet("https://raw.githubusercontent.com/hygg520/hygg/refs/heads/main/假延迟.txt"))()
 ```
 
+### 汉化版SimpleSpy
+```lua
+loadstring(game:HttpGet("https://raw.githubusercontent.com/hygg520/hygg/refs/heads/main/SimpleSpy.txt"))()
+```
+
 ### 动画包
 
 #### 阿迪达斯
