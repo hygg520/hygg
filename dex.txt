@@ -1,12 +1,3 @@
---[[
-	Dex++
-	Version 3.0
-	
-	Developed by Chillz
-	
-	Dex++ is a revival of Moon's Dex, made to fulfill Moon's Dex prophecy.
-]]
-
 local selection
 local nodes = {}
 
@@ -48,13 +39,9 @@ end
 
 local EmbeddedModules = {
 ["Console"] = function()
---[[
-	Console Module
-]]
--- Common Locals
-local Main,Lib,Apps,Settings -- Main Containers
-local Explorer, Properties, ScriptViewer, Notebook -- Major Apps
-local API,RMD,env,service,plr,create,createSimple -- Main Locals
+local Main,Lib,Apps,Settings
+local Explorer, Properties, ScriptViewer, Notebook
+local API,RMD,env,service,plr,create,createSimple
 
 local function initDeps(data)
 	Main = data.Main
@@ -83,19 +70,16 @@ local function main()
 
 	local window,ConsoleFrame
 
-	local OutputLimit = 500 -- Same as Roblox Console.
+	local OutputLimit = 500
 
 
-	-- Instances: 29 | Scripts: 1 | Modules: 1 | Tags: 0
 	local G2L = {};
 
-	-- StarterGui.ScreenGui
 	window = Lib.Window.new()
 	window:SetTitle("控制台")
 	window:Resize(500,400)
 	Console.Window = window
 
-	-- StarterGui.ScreenGui.Console
 	ConsoleFrame = Instance.new("ImageButton", window.GuiElems.Content);
 	ConsoleFrame["BorderSizePixel"] = 0;
 	ConsoleFrame["AutoButtonColor"] = false;
@@ -108,8 +92,7 @@ local function main()
 	ConsoleFrame["Position"] = UDim2.new(0,0,0,0);
 
 
-	-- StarterGui.ScreenGui.Console.CommandLine
-	G2L["3"] = Lib.Frame.new().Gui--Instance.new("Frame", ConsoleFrame);
+	G2L["3"] = Lib.Frame.new().Gui
 	G2L["3"].Parent = ConsoleFrame
 	G2L["3"]["BorderSizePixel"] = 0;
 	G2L["3"]["BackgroundColor3"] = Color3.fromRGB(37, 37, 37);
@@ -120,14 +103,10 @@ local function main()
 	G2L["3"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
 	G2L["3"]["Name"] = [[CommandLine]];
 
-
-	-- StarterGui.ScreenGui.Console.CommandLine.UIStroke
 	G2L["4"] = Instance.new("UIStroke", G2L["3"]);
 	G2L["4"]["Transparency"] = 0.65;
 	G2L["4"]["Thickness"] = 1.25;
 
-
-	-- StarterGui.ScreenGui.Console.CommandLine.ScrollingFrame
 	G2L["5"] = Instance.new("ScrollingFrame", G2L["3"]);
 	G2L["5"]["Active"] = true;
 	G2L["5"]["ScrollingDirection"] = Enum.ScrollingDirection.X;
@@ -145,7 +124,6 @@ local function main()
 	G2L["5"]["ScrollBarThickness"] = 2;
 	G2L["5"]["BackgroundTransparency"] = 1;
 
-	-- StarterGui.ScreenGui.Console.CommandLine.ScrollingFrame.TextBox
 	G2L["6"] = Instance.new("TextBox", G2L["5"]);
 	G2L["6"]["CursorPosition"] = -1;
 	G2L["6"]["TextXAlignment"] = Enum.TextXAlignment.Left;
@@ -163,13 +141,9 @@ local function main()
 	G2L["6"]["Text"] = [[]];
 	G2L["6"]["BackgroundTransparency"] = 1;
 
-
-	-- StarterGui.ScreenGui.Console.CommandLine.ScrollingFrame.TextBox.UIPadding
 	G2L["7"] = Instance.new("UIPadding", G2L["6"]);
 	G2L["7"]["PaddingLeft"] = UDim.new(0, 7);
 
-
-	-- StarterGui.ScreenGui.Console.CommandLine.ScrollingFrame.Highlight
 	G2L["8"] = Instance.new("TextLabel", G2L["5"]);
 	G2L["8"]["Interactable"] = false;
 	G2L["8"]["ZIndex"] = 2;
@@ -188,8 +162,6 @@ local function main()
 	G2L["8"]["AutomaticSize"] = Enum.AutomaticSize.X;
 	G2L["8"]["Name"] = [[Highlight]];
 
-
-	-- StarterGui.ScreenGui.Console.CommandLine.ScrollingFrame.Highlight.UIPadding
 	G2L["9"] = Instance.new("UIPadding", G2L["8"]);
 	G2L["9"]["PaddingLeft"] = UDim.new(0, 7);
 
@@ -210,7 +182,6 @@ local function main()
 	scrollbar.Gui.Up.ZIndex = 3
 	scrollbar.Gui.Down.ZIndex = 3
 
-	-- StarterGui.ScreenGui.Console.Output
 	G2L["a"] = Instance.new("ScrollingFrame", ConsoleFrame);
 	G2L["a"]["Active"] = true;
 	G2L["a"]["BorderSizePixel"] = 0;
@@ -238,36 +209,25 @@ local function main()
 		end
 	end)
 
-	-- StarterGui.ScreenGui.Console.Output.UIListLayout
 	G2L["b"] = Instance.new("UIListLayout", G2L["a"]);
 	G2L["b"]["SortOrder"] = Enum.SortOrder.LayoutOrder;
 
-
-	-- StarterGui.ScreenGui.Console.Output.UIStroke
 	G2L["c"] = Instance.new("UIStroke", G2L["a"]);
 	G2L["c"]["Transparency"] = 0.7;
 	G2L["c"]["Thickness"] = 1.25;
 	G2L["c"]["Color"] = Color3.fromRGB(12, 12, 12);
 
-
-	-- StarterGui.ScreenGui.Console.Output.OutputTextSize
 	G2L["d"] = Instance.new("NumberValue", G2L["a"]);
 	G2L["d"]["Name"] = [[OutputTextSize]];
 	G2L["d"]["Value"] = 15;
 
-
-	-- StarterGui.ScreenGui.Console.Output.OutputLimit
 	G2L["e"] = Instance.new("NumberValue", G2L["a"]);
 	G2L["e"]["Name"] = [[OutputLimit]];
 	G2L["e"]["Value"] = OutputLimit;
 
-
-	-- StarterGui.ScreenGui.Console.Output.UIPadding
 	G2L["f"] = Instance.new("UIPadding", G2L["a"]);
 	G2L["f"]["PaddingTop"] = UDim.new(0, 2);
 
-
-	-- StarterGui.ScreenGui.Console.TextSizeBox
 	G2L["10"] = Instance.new("Frame", ConsoleFrame);
 	G2L["10"]["BorderSizePixel"] = 0;
 	G2L["10"]["BackgroundColor3"] = Color3.fromRGB(37, 37, 37);
@@ -277,8 +237,6 @@ local function main()
 	G2L["10"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
 	G2L["10"]["Name"] = [[TextSizeBox]];
 
-
-	-- StarterGui.ScreenGui.Console.TextSizeBox.TextBox
 	G2L["11"] = Instance.new("TextBox", G2L["10"]);
 	G2L["11"]["PlaceholderColor3"] = Color3.fromRGB(108, 108, 108);
 	G2L["11"]["BorderSizePixel"] = 0;
@@ -288,28 +246,22 @@ local function main()
 	G2L["11"]["TextScaled"] = true;
 	G2L["11"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
 	G2L["11"]["FontFace"] = Font.new([[rbxasset://fonts/families/Inconsolata.json]], Enum.FontWeight.Regular, Enum.FontStyle.Normal);
-	G2L["11"]["PlaceholderText"] = [[大小]];
+	G2L["11"]["PlaceholderText"] = [[字号]];
 	G2L["11"]["Size"] = UDim2.new(1, 0, 1, 0);
 	G2L["11"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
 	G2L["11"]["Text"] = [[]];
 	G2L["11"]["BackgroundTransparency"] = 1;
 
-
-	-- StarterGui.ScreenGui.Console.TextSizeBox.TextBox.UIPadding
 	G2L["12"] = Instance.new("UIPadding", G2L["11"]);
 	G2L["12"]["PaddingTop"] = UDim.new(0, 2);
 	G2L["12"]["PaddingRight"] = UDim.new(0, 5);
 	G2L["12"]["PaddingLeft"] = UDim.new(0, 5);
 	G2L["12"]["PaddingBottom"] = UDim.new(0, 2);
 
-
-	-- StarterGui.ScreenGui.Console.TextSizeBox.UIStroke
 	G2L["13"] = Instance.new("UIStroke", G2L["10"]);
 	G2L["13"]["Transparency"] = 0.65;
 	G2L["13"]["Thickness"] = 1.25;
 
-
-	-- StarterGui.ScreenGui.Console.Clear
 	G2L["14"] = Instance.new("ImageButton", ConsoleFrame);
 	G2L["14"]["BorderSizePixel"] = 0;
 	G2L["14"]["BackgroundColor3"] = Color3.fromRGB(57, 57, 57);
@@ -318,8 +270,6 @@ local function main()
 	G2L["14"]["Name"] = [[Clear]];
 	G2L["14"]["Position"] = UDim2.new(1, -42, 0, 4);
 
-
-	-- StarterGui.ScreenGui.Console.Clear.TextLabel
 	G2L["15"] = Instance.new("TextLabel", G2L["14"]);
 	G2L["15"]["TextWrapped"] = true;
 	G2L["15"]["Interactable"] = false;
@@ -332,16 +282,12 @@ local function main()
 	G2L["15"]["BackgroundTransparency"] = 1;
 	G2L["15"]["Size"] = UDim2.new(1, 0, 1, 0);
 	G2L["15"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
-	G2L["15"]["Text"] = [[清除]];
+	G2L["15"]["Text"] = [[清空]];
 
-
-	-- StarterGui.ScreenGui.Console.Clear.UIPadding
-	G2L["16"] = Instance.new("UIPaddding", G2L["14"]);
+	G2L["16"] = Instance.new("UIPadding", G2L["14"]);
 	G2L["16"]["PaddingTop"] = UDim.new(0, 1);
 	G2L["16"]["PaddingBottom"] = UDim.new(0, 1);
 
-
-	-- StarterGui.ScreenGui.Console.OutputTemplate
 	G2L["17"] = Instance.new("TextBox", ConsoleFrame);
 	G2L["17"]["Visible"] = false;
 	G2L["17"]["Active"] = false;
@@ -361,17 +307,13 @@ local function main()
 	G2L["17"]["Size"] = UDim2.new(1, 0, 0, 1);
 	G2L["17"]["Position"] = UDim2.new(0, 20, 0, 0);
 	G2L["17"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
-	G2L["17"]["Text"] = [[(timestamp) <font color="rgb(255, 255, 255)">输出</font>]];
+	G2L["17"]["Text"] = [[(timestamp) <font color="rgb(255, 255, 255)">Output</font>]];
 	G2L["17"]["BackgroundTransparency"] = 1;
 
-
-	-- StarterGui.ScreenGui.Console.OutputTemplate.UIPadding
 	G2L["18"] = Instance.new("UIPadding", G2L["17"]);
 	G2L["18"]["PaddingRight"] = UDim.new(0, 6);
 	G2L["18"]["PaddingLeft"] = UDim.new(0, 6);
 
-
-	-- StarterGui.ScreenGui.Console.CtrlScroll
 	G2L["19"] = Instance.new("ImageButton", ConsoleFrame);
 	G2L["19"]["BorderSizePixel"] = 0;
 	G2L["19"]["BackgroundColor3"] = Color3.fromRGB(57, 57, 57);
@@ -380,8 +322,6 @@ local function main()
 	G2L["19"]["Name"] = [[CtrlScroll]];
 	G2L["19"]["Position"] = UDim2.new(0, 46, 0, 4);
 
-
-	-- StarterGui.ScreenGui.Console.CtrlScroll.TextLabel
 	G2L["1a"] = Instance.new("TextLabel", G2L["19"]);
 	G2L["1a"]["TextWrapped"] = true;
 	G2L["1a"]["Interactable"] = false;
@@ -394,15 +334,12 @@ local function main()
 	G2L["1a"]["BackgroundTransparency"] = 1;
 	G2L["1a"]["Size"] = UDim2.new(1, 0, 1, 0);
 	G2L["1a"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
-	G2L["1a"]["Text"] = [[Ctrl滚动]];
+	G2L["1a"]["Text"] = [[Ctrl 滚轮]];
 
-
-	-- StarterGui.ScreenGui.Console.CtrlScroll.UIPadding
 	G2L["1b"] = Instance.new("UIPadding", G2L["19"]);
 	G2L["1b"]["PaddingTop"] = UDim.new(0, 1);
 	G2L["1b"]["PaddingBottom"] = UDim.new(0, 1);
 
-	-- StarterGui.ScreenGui.Console.AutoScroll
 	G2L["20"] = Instance.new("ImageButton", ConsoleFrame);
 	G2L["20"]["BorderSizePixel"] = 0;
 	G2L["20"]["BackgroundColor3"] = Color3.fromRGB(57, 57, 57);
@@ -411,8 +348,6 @@ local function main()
 	G2L["20"]["Name"] = [[AutoScroll]];
 	G2L["20"]["Position"] = UDim2.new(0, 110, 0, 4);
 
-
-	-- StarterGui.ScreenGui.Console.AutoScroll.TextLabel
 	G2L["1e"] = Instance.new("TextLabel", G2L["20"]);
 	G2L["1e"]["TextWrapped"] = true;
 	G2L["1e"]["Interactable"] = false;
@@ -427,24 +362,16 @@ local function main()
 	G2L["1e"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
 	G2L["1e"]["Text"] = [[自动滚动]];
 
-
-	-- StarterGui.ScreenGui.Console.AutoScroll.UIPadding
 	G2L["1f"] = Instance.new("UIPadding", G2L["20"]);
 	G2L["1f"]["PaddingTop"] = UDim.new(0, 1);
 	G2L["1f"]["PaddingBottom"] = UDim.new(0, 1);
 
-
-	-- StarterGui.ScreenGui.ConsoleHandler
 	G2L["1c"] = Instance.new("LocalScript", G2L["1"]);
 	G2L["1c"]["Name"] = [[ConsoleHandler]];
 
-
-	-- StarterGui.ScreenGui.ConsoleHandler.SyntaxHighlighter
 	G2L["1d"] = Instance.new("ModuleScript", G2L["1c"]);
 	G2L["1d"]["Name"] = [[SyntaxHighlighter]];
 
-
-	-- Require G2L wrapper
 	local G2L_REQUIRE = require;
 	local G2L_MODULES = {};
 	local function require(Module)
@@ -644,7 +571,6 @@ local function main()
 	};
 
 	Console.Init = function()
-		-- StarterGui.ScreenGui.ConsoleHandler
 
 		local CtrlScroll = false
 		local AutoScroll = false
@@ -667,8 +593,6 @@ local function main()
 		end
 
 
-
-		-- MOUSE STUFFS
 
 		if CtrlScroll == true then
 			Console.CtrlScroll.BackgroundColor3 = Color3.fromRGB(11, 90, 175)
@@ -715,7 +639,6 @@ local function main()
 			end
 		end)
 
-		-- Console part
 		local displayedOutput = {}
 		local OutputLimit = Console.Output.OutputLimit
 
@@ -843,16 +766,9 @@ end
 return {InitDeps = initDeps, InitAfterMain = initAfterMain, Main = main}
 end,
 ["Explorer"] = function()
---[[
-	Explorer App Module
-	
-	The main explorer interface
-]]
-
--- Common Locals
-local Main,Lib,Apps,Settings -- Main Containers
-local Explorer, Properties, ScriptViewer, ModelViewer, Notebook -- Major Apps
-local API,RMD,env,service,plr,create,createSimple -- Main Locals
+local Main,Lib,Apps,Settings
+local Explorer, Properties, ScriptViewer, ModelViewer, Notebook
+local API,RMD,env,service,plr,create,createSimple
 
 local function initDeps(data)
 	Main = data.Main
@@ -876,7 +792,6 @@ local function initAfterMain()
 	ModelViewer = Apps.ModelViewer
 	Notebook = Apps.Notebook
 end
-
 local function main()
 	local Explorer = {}
 	local tree,listEntries,explorerOrders,searchResults,specResults = {},{},{},{},{}
@@ -897,7 +812,7 @@ local function main()
 	local addObject,removeObject,moveObject = nil,nil,nil
 
 	local iconData
-	local remote_blocklist = {} -- list of remotes beng blocked, k = the remote instance, v = their old function :3
+	local remote_blocklist = {}
 	nodes = nodes or {}
 
 	addObject = function(root)
@@ -907,7 +822,6 @@ local function main()
 		local rootParObj = ffa(root,"Instance")
 		local par = nodes[rootParObj]
 
-		-- Nil Handling
 		if not par then
 			if nilMap[root] then
 				nilCons[root] = nilCons[root] or {
@@ -931,7 +845,6 @@ local function main()
 		local newNode = {Obj = root, Parent = par}
 		nodes[root] = newNode
 
-		-- Automatic sorting if expanded
 		if sortingEnabled and expanded[par] and par.Sorted then
 			local left,right = 1,#par
 			local floor = math.floor
@@ -967,7 +880,7 @@ local function main()
 		local insts = getDescendants(root)
 		for i = 1,#insts do
 			local obj = insts[i]
-			if nodes[obj] then continue end -- Deferred
+			if nodes[obj] then continue end
 
 			local par = nodes[ffa(obj,"Instance")]
 			if not par then continue end
@@ -975,7 +888,6 @@ local function main()
 			nodes[obj] = newNode
 			par[#par+1] = newNode
 
-			-- Nil Handling
 			if isNil then
 				nilMap[obj] = true
 				nilCons[obj] = nilCons[obj] or {
@@ -1002,7 +914,6 @@ local function main()
 		local node = nodes[root]
 		if not node then return end
 
-		-- Nil Handling
 		if nilMap[node.Obj] then
 			moveObject(node.Obj)
 			return
@@ -1043,7 +954,6 @@ local function main()
 		local newPar = nodes[ffa(obj,"Instance")]
 		if oldPar == newPar then return end
 
-		-- Nil Handling
 		if not newPar then
 			if nilMap[obj] then
 				newPar = nilNode
@@ -1191,7 +1101,7 @@ local function main()
 	end
 
 	Explorer.NodeSorter = function(a,b)
-		if a.Del or b.Del then return false end -- Ghost node
+		if a.Del or b.Del then return false end
 
 		local aClass = a.Class
 		local bClass = b.Class
@@ -1269,7 +1179,6 @@ local function main()
 
 		recur(nodes[game],1)
 
-		-- Nil Instances
 		if env.getnilinstances then
 			if not (isSearching and not searchResults[nilNode]) then
 				tree[count] = nilNode
@@ -1323,7 +1232,7 @@ local function main()
 		})
 		dragOutline.Parent = treeFrame
 
-		local mouse = Main.Mouse or service.Players.LocalPlayer:GetMouse()
+		local mouse = Main.mouse or service.Players.LocalPlayer:GetMouse()
 		local function move()
 			local posX = mouse.X - offX
 			local posY = mouse.Y - offY
@@ -1753,9 +1662,6 @@ local function main()
 		if env.setclipboard then context:AddRegistered("COPY_PATH") end
 		context:AddRegistered("INSERT_OBJECT")
 		context:AddRegistered("SAVE_INST")
-		-- context:AddRegistered("CALL_FUNCTION")
-		-- context:AddRegistered("VIEW_CONNECTIONS")
-		-- context:AddRegistered("GET_REFERENCES")
 		context:AddRegistered("COPY_API_PAGE")
 
 		context:QueueDivider()
@@ -1923,7 +1829,7 @@ local function main()
 			end
 		end})
 
-		context:Register("GROUP",{Name = "分组", IconMap = Explorer.MiscIcons, Icon = "Group", DisabledIcon = "Group_Disabled", Shortcut = "Ctrl+G", OnClick = function()
+		context:Register("GROUP",{Name = "编组", IconMap = Explorer.MiscIcons, Icon = "Group", DisabledIcon = "Group_Disabled", Shortcut = "Ctrl+G", OnClick = function()
 			local sList = selection.List
 			if #sList == 0 then return end
 
@@ -1938,7 +1844,7 @@ local function main()
 			end
 		end})
 
-		context:Register("UNGROUP",{Name = "取消分组", IconMap = Explorer.MiscIcons, Icon = "Ungroup", DisabledIcon = "Ungroup_Disabled", Shortcut = "Ctrl+U", OnClick = function()
+		context:Register("UNGROUP",{Name = "取消编组", IconMap = Explorer.MiscIcons, Icon = "Ungroup", DisabledIcon = "Ungroup_Disabled", Shortcut = "Ctrl+U", OnClick = function()
 			local newSelection = {}
 			local count = 1
 			local isa = game.IsA
@@ -1999,7 +1905,7 @@ local function main()
 			end
 		end})
 
-		context:Register("JUMP_TO_PARENT",{Name = "跳转到父级", IconMap = Explorer.MiscIcons, Icon = "JumpToParent", OnClick = function()
+		context:Register("JUMP_TO_PARENT",{Name = "跳到父级", IconMap = Explorer.MiscIcons, Icon = "JumpToParent", OnClick = function()
 			local newSelection = {}
 			local count = 1
 			local sList = selection.List
@@ -2062,7 +1968,7 @@ local function main()
 		end})
 
 		local OldAnimation
-		context:Register("PLAY_TWEEN",{Name = "播放补间动画", IconMap = Explorer.MiscIcons, Icon = "Play", OnClick = function()
+		context:Register("PLAY_TWEEN",{Name = "播放补间", IconMap = Explorer.MiscIcons, Icon = "Play", OnClick = function()
 			local sList = selection.List
 
 			for i = 1, #sList do
@@ -2149,7 +2055,7 @@ local function main()
 			Explorer.ForceUpdate()
 		end})
 
-		context:Register("CLEAR_SEARCH_AND_JUMP_TO",{Name = "清除搜索并跳转到", OnClick = function()
+		context:Register("CLEAR_SEARCH_AND_JUMP_TO",{Name = "清除搜索并跳转", OnClick = function()
 			local newSelection = {}
 			local count = 1
 			local sList = selection.List
@@ -2166,7 +2072,6 @@ local function main()
 			end
 		end})
 
-		-- this code is very bad but im lazy and it works so cope
 		local clth = function(str)
 			if str:sub(1, 28) == "game:GetService(\"Workspace\")" then str = str:gsub("game:GetService%(\"Workspace\"%)", "workspace", 1) end
 			if str:sub(1, 27 + #plr.Name) == "game:GetService(\"Players\")." .. plr.Name then str = str:gsub("game:GetService%(\"Players\"%)." .. plr.Name, "game:GetService(\"Players\").LocalPlayer", 1) end
@@ -2193,18 +2098,10 @@ local function main()
 		end})
 
 		context:Register("INSERT_OBJECT",{Name = "插入对象", IconMap = Explorer.MiscIcons, Icon = "InsertObject", OnClick = function()
-			local mouse = Main.mouse
+			local mouse = Main.Mouse
 			local x,y = Explorer.LastRightClickX or mouse.X, Explorer.LastRightClickY or mouse.Y
 			Explorer.InsertObjectContext:Show(x,y)
 		end})
-
-		--[[context:Register("CALL_FUNCTION",{Name = "Call Function", IconMap = Explorer.ClassIcons, Icon = 66, OnClick = function()
-
-		end})
-
-		context:Register("GET_REFERENCES",{Name = "Get Lua References", IconMap = Explorer.ClassIcons, Icon = 34, OnClick = function()
-
-		end})]]
 
 		context:Register("SAVE_INST",{Name = "保存到文件", IconMap = Explorer.MiscIcons, Icon = "Save", OnClick = function()
 			local sList = selection.List
@@ -2229,9 +2126,6 @@ local function main()
 			end
 		end})
 
-        --[[context:Register("VIEW_CONNECTIONS",{Name = "View Connections", OnClick = function()
-            
-        end})]]
 		local ClassFire = {
 			RemoteEvent = "FireServer",
 			RemoteFunction = "InvokeServer",
@@ -2240,7 +2134,7 @@ local function main()
 			BindableRemote = "Fire",
 			BindableFunction = "Invoke",
 		}
-		context:Register("BLOCK_REMOTE",{Name = "阻止调用", IconMap = Explorer.MiscIcons, Icon = "Delete", DisabledIcon = "Empty", OnClick = function()
+		context:Register("BLOCK_REMOTE",{Name = "阻止触发", IconMap = Explorer.MiscIcons, Icon = "Delete", DisabledIcon = "Empty", OnClick = function()
 			local sList = selection.List
 			for i, list in sList do
 				local obj = list.Obj
@@ -2260,7 +2154,7 @@ local function main()
 			end
 		end})
 		
-		context:Register("UNBLOCK_REMOTE",{Name = "取消阻止", IconMap = Explorer.MiscIcons, Icon = "Play", DisabledIcon = "Empty", OnClick = function()
+		context:Register("UNBLOCK_REMOTE",{Name = "解除阻止", IconMap = Explorer.MiscIcons, Icon = "Play", DisabledIcon = "Empty", OnClick = function()
 			local sList = selection.List
 			for i, list in sList do
 				local obj = list.Obj
@@ -2273,7 +2167,7 @@ local function main()
 			end
 		end})
 
-		context:Register("COPY_API_PAGE",{Name = "复制Roblox API页面链接", IconMap = Explorer.MiscIcons, Icon = "Reference", OnClick = function()
+		context:Register("COPY_API_PAGE",{Name = "复制 Roblox API 页面链接", IconMap = Explorer.MiscIcons, Icon = "Reference", OnClick = function()
 			local sList = selection.List
 			if #sList == 1 then
 				env.setclipboard(
@@ -2282,7 +2176,7 @@ local function main()
 			end
 		end})
 
-		context:Register("3DVIEW_MODEL",{Name = "3D预览对象", IconMap = Explorer.LegacyClassIcons, Icon = 54, OnClick = function()
+		context:Register("3DVIEW_MODEL",{Name = "3D 预览对象", IconMap = Explorer.LegacyClassIcons, Icon = 54, OnClick = function()
 			local sList = selection.List
 			local isa = game.IsA
 			
@@ -2319,19 +2213,19 @@ local function main()
 			if scr then ScriptViewer.DumpFunctions(scr) end
 		end})
 
-		context:Register("FIRE_TOUCHTRANSMITTER",{Name = "触发TouchTransmitter", OnClick = function()
+		context:Register("FIRE_TOUCHTRANSMITTER",{Name = "触发 TouchTransmitter", OnClick = function()
 			local hrp = plr.Character and plr.Character:FindFirstChild("HumanoidRootPart")
 			if not hrp then return end
 			for _, v in ipairs(selection.List) do if v.Obj and v.Obj:IsA("TouchTransmitter") then firetouchinterest(hrp, v.Obj.Parent, 0) end end
 		end})
 
-		context:Register("FIRE_CLICKDETECTOR",{Name = "触发ClickDetector", OnClick = function()
+		context:Register("FIRE_CLICKDETECTOR",{Name = "触发 ClickDetector", OnClick = function()
 			local hrp = plr.Character and plr.Character:FindFirstChild("HumanoidRootPart")
 			if not hrp then return end
 			for _, v in ipairs(selection.List) do if v.Obj and v.Obj:IsA("ClickDetector") then fireclickdetector(v.Obj) end end
 		end})
 
-		context:Register("FIRE_PROXIMITYPROMPT",{Name = "触发ProximityPrompt", OnClick = function()
+		context:Register("FIRE_PROXIMITYPROMPT",{Name = "触发 ProximityPrompt", OnClick = function()
 			local hrp = plr.Character and plr.Character:FindFirstChild("HumanoidRootPart")
 			if not hrp then return end
 			for _, v in ipairs(selection.List) do if v.Obj and v.Obj:IsA("ProximityPrompt") then fireproximityprompt(v.Obj) end end
@@ -2346,7 +2240,7 @@ local function main()
 			for _, v in next, selection.List do
 				if v.Obj:IsA("LuaSourceContainer") and env.isViableDecompileScript(v.Obj) then
 					local success, source = pcall(env.decompile, v.Obj)
-					if not success or not source then source = ("-- DEX - %s 反编译 %s 失败"):format(env.executor, v.Obj.ClassName) end
+					if not success or not source then source = ("-- DEX - %s failed to decompile %s"):format(env.executor, v.Obj.ClassName) end
 					local fileName = ("%s_%s_%i_Source.txt"):format(env.parsefile(v.Obj.Name), v.Obj.ClassName, game.PlaceId)
 					Lib.SaveAsPrompt(fileName, source)
 					
@@ -2429,11 +2323,11 @@ local function main()
 			end
 		end})
 
-		context:Register("REFRESH_NIL",{Name = "刷新Nil实例", OnClick = function()
+		context:Register("REFRESH_NIL",{Name = "刷新 Nil 实例", OnClick = function()
 			Explorer.RefreshNilInstances()
 		end})
 
-		context:Register("HIDE_NIL",{Name = "隐藏Nil实例", OnClick = function()
+		context:Register("HIDE_NIL",{Name = "隐藏 Nil 实例", OnClick = function()
 			Explorer.HideNilInstances()
 		end})
 
@@ -2572,7 +2466,7 @@ local function main()
 			local tags = class.Tags
 			if not tags.NotCreatable and not tags.Service then
 				local rmdEntry = RMD.Classes[class.Name]
-				classes[#classes+1] = {class,rmdEntry and rmdEntry.ClassCategory or "未分类"}
+				classes[#classes+1] = {class,rmdEntry and rmdEntry.ClassCategory or "Uncategorized"}
 			end
 		end
 		table.sort(classes,function(a,b)
@@ -2628,11 +2522,8 @@ local function main()
 
 		Explorer.InsertObjectContext = context
 	end
-	
-	--[[
-		Headers, Setups, Predicate, ObjectDefs
-	]]
-	Explorer.SearchFilters = { -- TODO: Use data table (so we can disable some if funcs don't exist)
+
+	Explorer.SearchFilters = {
 		Comparison = {
 			["isa"] = function(argString)
 				local lower = string.lower
@@ -2805,7 +2696,7 @@ local function main()
 			local nextData = foundData[nextInd] or {1}
 			local op = ops[nextData[2]]
 			local term = sub(query,init,nextInd-1)
-			term = match(term,"^%s*(.-)%s*$") or "" -- Trim
+			term = match(term,"^%s*(.-)%s*$") or ""
 
 			if #term > 0 then
 				if sub(term,1,1) == "!" then
@@ -2853,7 +2744,7 @@ local function main()
 
 			if op then
 				finalPredicate = finalPredicate..op
-				if op == "(" and (#term > 0 or lastOp == ")") then -- Handle bracket glitch
+				if op == "(" and (#term > 0 or lastOp == ")") then
 					return
 				else
 					lastOp = op
@@ -2967,7 +2858,7 @@ return search]==]
 
 			if specFilters then
 				table.clear(specResults)
-				for i = 1,#specFilters do -- Specific search filers that returns list of matches
+				for i = 1,#specFilters do
 					local resMap = {}
 					specResults[i] = resMap
 					local objs = specFilters[i]()
@@ -3011,7 +2902,7 @@ return search]==]
 		entryTemplate = create({
 			{1,"TextButton",{AutoButtonColor=false,BackgroundColor3=Color3.new(0,0,0),BackgroundTransparency=1,BorderColor3=Color3.new(0,0,0),Font=3,Name="Entry",Position=UDim2.new(0,1,0,1),Size=UDim2.new(0,250,0,20),Text="",TextSize=14,}},
 			{2,"Frame",{BackgroundColor3=Color3.new(0.04313725605607,0.35294118523598,0.68627452850342),BackgroundTransparency=1,BorderColor3=Color3.new(0.33725491166115,0.49019610881805,0.73725491762161),BorderSizePixel=0,Name="Indent",Parent={1},Position=UDim2.new(0,20,0,0),Size=UDim2.new(1,-20,1,0),}},
-			{3,"TextLabel",{BackgroundColor3=Color3.new(1,1,1),BackgroundTransparency=1,Font=3,Name="EntryName",Parent={2},Position=UDim2.new(0,26,0,0),Size=UDim2.new(1,-26,1,0),Text="工作区",TextColor3=Color3.new(0.86274516582489,0.86274516582489,0.86274516582489),TextSize=14,TextXAlignment=0,}},
+			{3,"TextLabel",{BackgroundColor3=Color3.new(1,1,1),BackgroundTransparency=1,Font=3,Name="EntryName",Parent={2},Position=UDim2.new(0,26,0,0),Size=UDim2.new(1,-26,1,0),Text="Workspace",TextColor3=Color3.new(0.86274516582489,0.86274516582489,0.86274516582489),TextSize=14,TextXAlignment=0,}},
 			{4,"TextButton",{BackgroundColor3=Color3.new(1,1,1),BackgroundTransparency=1,ClipsDescendants=true,Font=3,Name="Expand",Parent={2},Position=UDim2.new(0,-20,0,0),Size=UDim2.new(0,20,0,20),Text="",TextSize=14,}},
 			{5,"ImageLabel",{BackgroundColor3=Color3.new(1,1,1),BackgroundTransparency=1,Image="rbxassetid://5642383285",ImageRectOffset=Vector2.new(144,16),ImageRectSize=Vector2.new(16,16),Name="Icon",Parent={4},Position=UDim2.new(0,2,0,2),ScaleType=4,Size=UDim2.new(0,16,0,16),}},
 			{6,"ImageLabel",{BackgroundColor3=Color3.new(1,1,1),BackgroundTransparency=1,ImageRectOffset=Vector2.new(304,0),ImageRectSize=Vector2.new(16,16),Name="Icon",Parent={2},Position=UDim2.new(0,4,0,2),ScaleType=4,Size=UDim2.new(0,16,0,16),}},
@@ -3193,7 +3084,6 @@ return search]==]
 		end
 		holder:ClearAllChildren()
 
-		-- Updates theme
 		for i,v in pairs(Explorer.SelectionVisualGui:GetChildren()) do
 			v.BackgroundColor3 = Color3.fromRGB(0, 170, 255)
 		end
@@ -3243,7 +3133,6 @@ return search]==]
 			iconData = Lib.IconMap.getIconDataFromName(Settings.ClassIcon)
 			
 			Explorer.ClassIcons = Lib.IconMap.new("rbxassetid://"..tostring(iconData.MapId), iconData.IconSize * iconData.Witdh, iconData.IconSize * iconData.Height,iconData.IconSize,iconData.IconSize)
-			-- move every value dict 1 behind because SetDict starts at 0 not 1 lol
 			local fixed = {}
 			for i,v in pairs(iconData.Icons) do
 				fixed[i] = v - 1
@@ -3271,14 +3160,14 @@ return search]==]
 		Explorer.SearchExpanded = setmetatable({},{__mode = "k"})
 		expanded = Explorer.Expanded
 
-		nilNode.Obj.Name = "Nil实例"
+		nilNode.Obj.Name = "Nil Instances"
 		nilNode.Locked = true
 
 		local explorerItems = create({
 			{1,"Folder",{Name="ExplorerItems",}},
 			{2,"Frame",{BackgroundColor3=Color3.new(0.20392157137394,0.20392157137394,0.20392157137394),BorderSizePixel=0,Name="ToolBar",Parent={1},Size=UDim2.new(1,0,0,22),}},
 			{3,"Frame",{BackgroundColor3=Color3.new(0.14901961386204,0.14901961386204,0.14901961386204),BorderColor3=Color3.new(0.1176470592618,0.1176470592618,0.1176470592618),BorderSizePixel=0,Name="SearchFrame",Parent={2},Position=UDim2.new(0,3,0,1),Size=UDim2.new(1,-6,0,18),}},
-			{4,"TextBox",{BackgroundColor3=Color3.new(1,1,1),BackgroundTransparency=1,ClearTextOnFocus=false,Font=3,Name="SearchBox",Parent={3},PlaceholderColor3=Color3.new(0.39215689897537,0.39215689897537,0.39215689897537),PlaceholderText="搜索工作区",Position=UDim2.new(0,4,0,0),Size=UDim2.new(1,-24,0,18),Text="",TextColor3=Color3.new(1,1,1),TextSize=14,TextXAlignment=0,}},
+			{4,"TextBox",{BackgroundColor3=Color3.new(1,1,1),BackgroundTransparency=1,ClearTextOnFocus=false,Font=3,Name="SearchBox",Parent={3},PlaceholderColor3=Color3.new(0.39215689897537,0.39215689897537,0.39215689897537),PlaceholderText="搜索 workspace",Position=UDim2.new(0,4,0,0),Size=UDim2.new(1,-24,0,18),Text="",TextColor3=Color3.new(1,1,1),TextSize=14,TextXAlignment=0,}},
 			{5,"UICorner",{CornerRadius=UDim.new(0,2),Parent={3},}},
 			{6,"UIStroke",{Thickness=1.4,Parent={3},Color=Color3.fromRGB(42,42,42)}},
 			{7,"TextButton",{AutoButtonColor=false,BackgroundColor3=Color3.new(0.12549020349979,0.12549020349979,0.12549020349979),BackgroundTransparency=1,BorderSizePixel=0,Font=3,Name="Reset",Parent={3},Position=UDim2.new(1,-17,0,1),Size=UDim2.new(0,16,0,16),Text="",TextColor3=Color3.new(1,1,1),TextSize=14,}},
@@ -3324,13 +3213,11 @@ return search]==]
 		scrollV.Gui.Parent = window.GuiElems.Content
 		scrollH.Gui.Parent = window.GuiElems.Content
 
-		-- Init stuff that requires the window
 		Explorer.InitRenameBox()
 		Explorer.InitSearch()
 		Explorer.InitDelCleaner()
 		selection.Changed:Connect(Explorer.UpdateSelectionVisuals)
 
-		-- Window events
 		window.GuiElems.Main:GetPropertyChangedSignal("AbsoluteSize"):Connect(function()
 			if Explorer.Active then
 				Explorer.UpdateView()
@@ -3352,14 +3239,11 @@ return search]==]
 		window.OnDeactivate:Connect(function() Explorer.Active = false end)
 		window.OnMinimize:Connect(function() Explorer.Active = false end)
 
-		-- Settings
 		autoUpdateSearch = Settings.Explorer.AutoUpdateSearch
 
-		-- Fill in nodes
 		nodes[game] = {Obj = game}
 		expanded[nodes[game]] = true
 
-		-- Nil Instances
 		if env.getnilinstances then
 			nodes[nilNode.Obj] = nilNode
 		end
@@ -3401,16 +3285,9 @@ end
 return {InitDeps = initDeps, InitAfterMain = initAfterMain, Main = main}
 end,
 ["Lib"] = function()
---[[
-	Lib Module
-	
-	Container for functions and classes
-]]
-
--- Common Locals
-local Main,Lib,Apps,Settings -- Main Containers
-local Explorer, Properties, ScriptViewer, Notebook -- Major Apps
-local API,RMD,env,service,plr,create,createSimple -- Main Locals
+local Main,Lib,Apps,Settings
+local Explorer, Properties, ScriptViewer, Notebook
+local API,RMD,env,service,plr,create,createSimple
 
 local function initDeps(data)
 	Main = data.Main
@@ -3439,10 +3316,9 @@ local function main()
 
 	local renderStepped = service.RunService.RenderStepped
 	local signalWait = renderStepped.wait
-	local PH = newproxy() -- Placeholder, must be replaced in constructor
+	local PH = newproxy()
 	local SIGNAL = newproxy()
 
-	-- Usually for classes that work with a Roblox Object
 	local function initObj(props,mt)
 		local type = type
 		local function copy(t)
@@ -3467,8 +3343,6 @@ local function main()
 		return {__index = function(self,ind) if not props[ind] then return funcs[ind] or self.Gui[ind] end end,
 		__newindex = function(self,ind,val) if not props[ind] then self.Gui[ind] = val else rawset(self,ind,val) end end}
 	end
-
-	-- Functions
 
 	Lib.FormatLuaString = (function()
 		local string = string
@@ -3562,12 +3436,8 @@ local function main()
 
 	Lib.ParseXML = (function()
 		local func = function()
-			-- Only exists to parse RMD
-			-- from https://github.com/jonathanpoelen/xmlparser
-
 			local string, print, pairs = string, print, pairs
 
-			-- http://lua-users.org/wiki/StringTrim
 			local trim = function(s)
 				local from = s:match"^%s*()"
 				return from > #s and "" or s:match(".*%S", from)
@@ -3579,7 +3449,6 @@ local function main()
 			local E = string.byte('E', 1)
 
 			function parse(s, evalEntities)
-				-- remove comments
 				s = s:gsub('<!%-%-(.-)%-%->', '')
 
 				local entities, tentities = {}
@@ -3605,12 +3474,11 @@ local function main()
 				end
 
 				s:gsub('<([?!/]?)([-:_%w]+)%s*(/?>?)([^<]*)', function(type, name, closed, txt)
-					-- open
 					if #type == 0 then
 						local a = {}
 						if #closed == 0 then
 							local len = 0
-							for all,aname,_,value,starttxt in string.gmatch(txt, "(.-([-_%w]+)%s*=%s*(.)(.-)%3\s*(/?>?))") do
+							for all,aname,_,value,starttxt in string.gmatch(txt, "(.-([-_%w]+)%s*=%s*(.)(.-)%3%s*(/?>?))") do
 								len = len + #all
 								a[aname] = value
 								if #starttxt ~= 0 then
@@ -3628,25 +3496,17 @@ local function main()
 						end
 
 						addtext(txt)
-						-- close
 					elseif '/' == type then
 						t = l[#l]
 						l[#l] = nil
 
 						addtext(txt)
-						-- ENTITY
 					elseif '!' == type then
 						if E == name:byte(1) then
 							txt:gsub('([_%w]+)%s+(.)(.-)%2', function(name, q, entity)
 								entities[#entities+1] = {name=name, value=entity}
 							end, 1)
 						end
-						-- elseif '?' == type then
-						--	 print('?	' .. name .. ' // ' .. attrs .. '$$')
-						-- elseif '-' == type then
-						--	 print('comment	' .. name .. ' // ' .. attrs .. '$$')
-						-- else
-						--	 print('o	' .. #p .. ' // ' .. name .. ' // ' .. attrs .. '$$')
 					end
 				end)
 
@@ -3928,12 +3788,12 @@ local function main()
 				if env.writefile then
 					local s, msg = pcall(env.writefile, filename, codeText)
 					if not s then
-						win.Elements.Error.Text = "错误：" .. msg
+						win.Elements.Error.Text = "错误： " .. msg
 						task.spawn(error, msg)
 						task.wait(1)
 					end
 				else
-					win.Elements.Error.Text = "您的执行器不支持 'writefile'"
+					win.Elements.Error.Text = "Your executor does not support 'writefile'"
 					task.wait(1)
 				end
 			elseif type(codeToSave) == "function" then
@@ -3941,9 +3801,9 @@ local function main()
 				currentextension = ext or filename:match("%.([^%.]+)$") or "txt"
 				filename = filename:gsub("%.[^.]+$", "") .. "." .. currentextension
 
-				local s, msg = pcall(codeToSave,filename) -- callback
+				local s, msg = pcall(codeToSave,filename)
 				if not s then
-					win.Elements.Error.Text = "错误：" .. msg
+					win.Elements.Error.Text = "错误： " .. msg
 					task.spawn(error, msg)
 					Lib.FastWait(1)
 				end
@@ -3959,8 +3819,6 @@ local function main()
 		
 		win:Show()
 	end
-	
-	-- Classes
 
 	Lib.Signal = (function()
 		local funcs = {}
@@ -4099,7 +3957,7 @@ local function main()
 
 		return {new = new}
 	end)()
-	
+
 	Lib.IconMap = (function()
 		local funcs = {}
 		local IconList = {
@@ -5121,7 +4979,7 @@ local function main()
 					PublishService = 181,
 					Reference = 182,
 					RemoteEvent = 183,
-					Remote_function = 184,
+					RemoteFunction = 184,
 					RenderingTest = 185,
 					ReplicatedFirst = 186,
 					ReplicatedScriptService = 187,
@@ -5400,7 +5258,6 @@ local function main()
 
 		return {new = new, newLinear = newLinear, getIconDataFromName = getIconDataFromName}
 	end)()
-
 	Lib.ScrollBar = (function()
 		local funcs = {}
 		local user = service.UserInputService
@@ -5415,7 +5272,7 @@ local function main()
 			local scrollThumb = self.GuiElems.ScrollThumb
 			local scrollThumbFrame = self.GuiElems.ScrollThumbFrame
 
-			if not (self:CanScrollUp() or self:CanScrollDown()) then
+			if not (self:CanScrollUp()	or self:CanScrollDown()) then
 				scrollThumb.Visible = false
 			else
 				scrollThumb.Visible = true
@@ -5847,8 +5704,6 @@ local function main()
 			resizer.MouseButton1Down:Connect(function() pressing = true resizer.BackgroundTransparency = 0.5 end)
 			resizer.MouseButton1Up:Connect(function() pressing = false resizer.BackgroundTransparency = 1 end)
 			
-			
-			
 			resizer.InputBegan:Connect(function(input)
 				if not self.Dragging and not self.Resizing and self.Resizable and self.ResizableInternal and pressing then
 					local isH = dir:find("[WE]") and true
@@ -5962,7 +5817,7 @@ local function main()
 				{3,"Frame",{BackgroundColor3=Color3.new(0.17647059261799,0.17647059261799,0.17647059261799),BorderSizePixel=0,Name="Content",Parent={2},Position=UDim2.new(0,0,0,20),Size=UDim2.new(1,0,1,-20),ClipsDescendants=true}},
 				{4,"Frame",{BackgroundColor3=Color3.fromRGB(33,33,33),BorderSizePixel=0,Name="Line",Parent={3},Size=UDim2.new(1,0,0,1),}},
 				{5,"TextButton",{AutoButtonColor=false,BackgroundColor3=Color3.new(0.20392157137394,0.20392157137394,0.20392157137394),BorderSizePixel=0,Name="TopBar",Parent={2},Size=UDim2.new(1,0,0,20),Text = ""}},
-				{6,"TextLabel",{BackgroundColor3=Color3.new(1,1,1),BackgroundTransparency=1,Font=3,Name="Title",Parent={5},Position=UDim2.new(0,5,0,0),Size=UDim2.new(1,-10,0,20),Text="窗口",TextColor3=Color3.new(1,1,1),TextSize=14,TextXAlignment=0}},
+				{6,"TextLabel",{BackgroundColor3=Color3.new(1,1,1),BackgroundTransparency=1,Font=3,Name="Title",Parent={5},Position=UDim2.new(0,5,0,0),Size=UDim2.new(1,-10,0,20),Text="Window",TextColor3=Color3.new(1,1,1),TextSize=14,TextXAlignment=0}},
 				{7,"TextButton",{AutoButtonColor=false,BackgroundColor3=Color3.new(0.12549020349979,0.12549020349979,0.12549020349979),BackgroundTransparency=1,BorderSizePixel=0,Font=3,Name="Close",Parent={5},Position=UDim2.new(1,-18,0,2),Size=UDim2.new(0,16,0,16),Text="",TextColor3=Color3.new(1,1,1),TextSize=14,}},
 				{8,"ImageLabel",{BackgroundColor3=Color3.new(1,1,1),BackgroundTransparency=1,Image="rbxassetid://5054663650",Parent={7},Position=UDim2.new(0,3,0,3),Size=UDim2.new(0,10,0,10),}},
 				{9,"UICorner",{CornerRadius=UDim.new(0,4),Parent={7},}},
@@ -6009,7 +5864,6 @@ local function main()
 			if Settings.Window.Transparency then
 				self.GuiElems.Content.BackgroundTransparency = Settings.Window.Transparency
 			end
-
 
 			guiTopBar.InputBegan:Connect(function(input)
 				if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
@@ -6201,13 +6055,12 @@ local function main()
 		local function sideResizerHook(resizer,dir,side,pos)
 			local pressing = false
 			
-			local mouse = Main.mouse
+			local mouse = Main.Mouse
 			local windows = side.Windows
 
 			resizer.MouseEnter:Connect(function() resizer.BackgroundColor3 = theme.MainColor2 end)
 			resizer.MouseButton1Down:Connect(function() pressing = true resizer.BackgroundColor3 = theme.MainColor2 end)
 			resizer.MouseButton1Up:Connect(function() pressing = false resizer.BackgroundColor3 = theme.Button end)
-
 
 			resizer.InputBegan:Connect(function(input)
 				if not side.Resizing and pressing then
@@ -6541,7 +6394,7 @@ local function main()
 			self.Gui.Parent = nil
 			updateWindows(true)
 		end
-		
+
 		funcs.Destroy = function(self)
 			self.Closed = true
 			self:SetResizableInternal(false)
@@ -6660,7 +6513,7 @@ local function main()
 			if align then
 				window:AlignTo(targetSide,pos,size,data.Silent)
 			else
-				if align == nil and window.ClosedSide then -- Regular open
+				if align == nil and window.ClosedSide then
 					window:AlignTo(window.ClosedSide,window.SidePos,size,true)
 					static.SetSideVisible(window.ClosedSide,true)
 				else
@@ -6713,8 +6566,8 @@ local function main()
 
 			sidesGui = Instance.new("ScreenGui")
 			local leftFrame = create({
-				{1,"Frame",{Active=true,Name="LeftSide",BackgroundColor3=Color3.new(0.17647059261799,0.17647059261799,0.17647059261799),BorderSizePixel=0,}},
-				{2,"TextButton",{AutoButtonColor=false,BackgroundColor3=Color3.new(0.2549019753933,0.2549019753933,0.2549019753933),BorderSizePixel=0,Font=3,Name="Resizer",Parent={1},Size=UDim2.new(0,5,1,0),Text="",TextColor3=Color3.new(0,0,0),TextSize=14,}},
+				{1,"Frame",{Active=true,Name="LeftSide",BackgroundColor3=Color3.new(0.17647059261799,0.17647059261799,0.17647059261799,0.17647059261799),BorderSizePixel=0,}},
+				{2,"TextButton",{AutoButtonColor=false,BackgroundColor3=Color3.new(0.2549019753933,0.2549019753933,0.2549019753933,0.2549019753933),BorderSizePixel=0,Font=3,Name="Resizer",Parent={1},Size=UDim2.new(0,5,1,0),Text="",TextColor3=Color3.new(0,0,0),TextSize=14,}},
 				{3,"Frame",{BackgroundColor3=Color3.new(0.14117647707462,0.14117647707462,0.14117647707462),BorderSizePixel=0,Name="Line",Parent={2},Position=UDim2.new(0,0,0,0),Size=UDim2.new(0,1,1,0),}},
 				{4,"TextButton",{AutoButtonColor=false,BackgroundColor3=Color3.new(0.2549019753933,0.2549019753933,0.2549019753933),BorderSizePixel=0,Font=3,Name="WindowResizer",Parent={1},Position=UDim2.new(1,-300,0,0),Size=UDim2.new(1,0,0,4),Text="",TextColor3=Color3.new(0,0,0),TextSize=14,}},
 				{5,"Frame",{BackgroundColor3=Color3.new(0.14117647707462,0.14117647707462,0.14117647707462),BorderSizePixel=0,Name="Line",Parent={4},Size=UDim2.new(1,0,0,1),}},
@@ -6726,7 +6579,7 @@ local function main()
 			leftFrame.Parent = sidesGui
 
 			local rightFrame = create({
-				{1,"Frame",{Active=true,Name="RightSide",BackgroundColor3=Color3.new(0.17647059261799,0.17647059261799,0.17647059261799),BorderSizePixel=0,}},
+				{1,"Frame",{Active=true,Name="RightSide",BackgroundColor3=Color3.new(0.17647059261799,0.17647059261799,0.17647059261799,0.17647059261799),BorderSizePixel=0,}},
 				{2,"TextButton",{AutoButtonColor=false,BackgroundColor3=Color3.new(0.2549019753933,0.2549019753933,0.2549019753933),BorderSizePixel=0,Font=3,Name="Resizer",Parent={1},Size=UDim2.new(0,5,1,0),Text="",TextColor3=Color3.new(0,0,0),TextSize=14,}},
 				{3,"Frame",{BackgroundColor3=Color3.new(0.14117647707462,0.14117647707462,0.14117647707462),BorderSizePixel=0,Name="Line",Parent={2},Position=UDim2.new(0,4,0,0),Size=UDim2.new(0,1,1,0),}},
 				{4,"TextButton",{AutoButtonColor=false,BackgroundColor3=Color3.new(0.2549019753933,0.2549019753933,0.2549019753933),BorderSizePixel=0,Font=3,Name="WindowResizer",Parent={1},Position=UDim2.new(1,-300,0,0),Size=UDim2.new(1,0,0,4),Text="",TextColor3=Color3.new(0,0,0),TextSize=14,}},
@@ -6836,7 +6689,7 @@ local function main()
 				{3,"UICorner",{CornerRadius=UDim.new(0,4),Parent={2},}},
 				{4,"Frame",{BackgroundColor3=Color3.new(0.17647059261799,0.17647059261799,0.17647059261799),Name="Container",Parent={2},Position=UDim2.new(0,1,0,1),Size=UDim2.new(1,-2,1,-2),}},
 				{5,"UICorner",{CornerRadius=UDim.new(0,4),Parent={4},}},
-				{6,"ScrollingFrame",{Active=true,BackgroundColor3=Color3.new(0.20392157137394,0.20392157137394,0.20392157137394,0.20392157137394),BackgroundTransparency=1,BorderSizePixel=0,CanvasSize=UDim2.new(0,0,0,0),Name="List",Parent={4},Position=UDim2.new(0,2,0,2),ScrollBarImageColor3=Color3.new(0,0,0),ScrollBarThickness=4,Size=UDim2.new(1,-4,1,-4),VerticalScrollBarInset=1,}},
+				{6,"ScrollingFrame",{Active=true,BackgroundColor3=Color3.new(0.20392157137394,0.20392157137394,0.20392157137394),BackgroundTransparency=1,BorderSizePixel=0,CanvasSize=UDim2.new(0,0,0,0),Name="List",Parent={4},Position=UDim2.new(0,2,0,2),ScrollBarImageColor3=Color3.new(0,0,0),ScrollBarThickness=4,Size=UDim2.new(1,-4,1,-4),VerticalScrollBarInset=1,}},
 				{7,"UIListLayout",{Parent={6},SortOrder=2,}},
 				{8,"Frame",{BackgroundColor3=Color3.new(0.20392157137394,0.20392157137394,0.20392157137394),BorderSizePixel=0,Name="SearchFrame",Parent={4},Size=UDim2.new(1,0,0,24),Visible=false,}},
 				{9,"Frame",{BackgroundColor3=Color3.new(0.14901961386204,0.14901961386204,0.14901961386204),BorderColor3=Color3.new(0.1176470592618,0.1176470592618,0.1176470592618),BorderSizePixel=0,Name="SearchContainer",Parent={8},Position=UDim2.new(0,3,0,3),Size=UDim2.new(1,-6,0,18),}},
@@ -6844,7 +6697,7 @@ local function main()
 				{11,"UICorner",{CornerRadius=UDim.new(0,2),Parent={9},}},
 				{12,"Frame",{BackgroundColor3=Color3.new(0.14117647707462,0.14117647707462,0.14117647707462),BorderSizePixel=0,Name="Line",Parent={8},Position=UDim2.new(0,0,1,0),Size=UDim2.new(1,0,0,1),}},
 				{13,"TextButton",{AutoButtonColor=false,BackgroundColor3=Color3.new(0.20392157137394,0.20392157137394,0.20392157137394),BackgroundTransparency=1,BorderColor3=Color3.new(0.33725491166115,0.49019610881805,0.73725491762161),BorderSizePixel=0,Font=3,Name="Entry",Parent={1},Size=UDim2.new(1,0,0,22),Text="",TextSize=14,Visible=false,}},
-				{14,"TextLabel",{BackgroundColor3=Color3.new(1,1,1),BackgroundTransparency=1,BorderSizePixel=0,Font=3,Name="EntryName",Parent={13},Position=UDim2.new(0,24,0,0),Size=UDim2.new(1,-24,1,0),Text="副本",TextColor3=Color3.new(0.86274516582489,0.86274516582489,0.86274516582489),TextSize=14,TextXAlignment=0,}},
+				{14,"TextLabel",{BackgroundColor3=Color3.new(1,1,1),BackgroundTransparency=1,BorderSizePixel=0,Font=3,Name="EntryName",Parent={13},Position=UDim2.new(0,24,0,0),Size=UDim2.new(1,-24,1,0),Text="Duplicate",TextColor3=Color3.new(0.86274516582489,0.86274516582489,0.86274516582489),TextSize=14,TextXAlignment=0,}},
 				{15,"TextLabel",{BackgroundColor3=Color3.new(1,1,1),BackgroundTransparency=1,Font=3,Name="Shortcut",Parent={13},Position=UDim2.new(0,24,0,0),Size=UDim2.new(1,-30,1,0),Text="Ctrl+D",TextColor3=Color3.new(0.86274516582489,0.86274516582489,0.86274516582489),TextSize=14,TextXAlignment=1,}},
 				{16,"ImageLabel",{BackgroundColor3=Color3.new(1,1,1),BackgroundTransparency=1,ImageRectOffset=Vector2.new(304,0),ImageRectSize=Vector2.new(16,16),Name="Icon",Parent={13},Position=UDim2.new(0,2,0,3),ScaleType=4,Size=UDim2.new(0,16,0,16),}},
 				{17,"UICorner",{CornerRadius=UDim.new(0,4),Parent={13},}},
@@ -7021,9 +6874,9 @@ local function main()
 						if item.Disabled and item.DisabledIcon then
 							iconIndex = item.DisabledIcon
 						elseif item.Icon then
-							iconIndex = item.Icon
+							iconIndex =  item.Icon
 						end
-
+						
 						if item.IconMap then
 							if type(iconIndex) == "number" then
 								item.IconMap:Display(newEntry.Icon, iconIndex)
@@ -7177,7 +7030,6 @@ local function main()
 
 		return {new = new}
 	end)()
-
 	Lib.CodeFrame = (function()
 		local funcs = {}
 
@@ -7793,7 +7645,7 @@ local function main()
 			local after = line:sub(cursorX+1)
 
 			text = text:gsub("\r\n","\n")
-			text = self:ConvertText(text,true) -- Tab Convert
+			text = self:ConvertText(text,true)
 
 			local textLines = text:split("\n")
 			local insert = table.insert
@@ -7822,7 +7674,6 @@ local function main()
 			self.ScrollH:ScrollTo(self.ScrollH.Index + x)
 		end
 
-		-- x and y starts at 0
 		funcs.TabAdjust = function(self,x,y)
 			local lines = self.Lines
 			local line = lines[y+1]
@@ -8563,7 +8414,7 @@ local function main()
 				Checkmark2 = filler.checkmark2,
 				Middle = filler.middle
 			}
-	
+
 			checkbox.MouseButton1Up:Connect(function()
 				if Lib.CheckMouseInGui(checkbox) then
 					if self.Style == 0 then
@@ -8855,7 +8706,6 @@ local function main()
 				end
 			end)
 
-
 			if reverseY then
 				local newY = y - sizeY - (self.ReverseYOffset or 0)
 				y = newY >= 0 and newY or 0
@@ -8889,7 +8739,7 @@ local function main()
 		return {new = new}
 	end)()
 
-	Lib.ColorPicker = (function() -- TODO: Convert to newer class model
+	Lib.ColorPicker = (function()
 		local funcs = {}
 
 		local function new()
@@ -8902,7 +8752,7 @@ local function main()
 			local guiContents = create({
 				{1,"Frame",{BackgroundColor3=Color3.new(0.17647059261799,0.17647059261799,0.17647059261799),BorderSizePixel=0,ClipsDescendants=true,Name="Content",Position=UDim2.new(0,0,0,20),Size=UDim2.new(1,0,1,-20),}},
 				{2,"Frame",{BackgroundColor3=Color3.new(1,1,1),BackgroundTransparency=1,Name="BasicColors",Parent={1},Position=UDim2.new(0,5,0,5),Size=UDim2.new(0,180,0,200),}},
-				{3,"TextLabel",{BackgroundColor3=Color3.new(1,1,1),BackgroundTransparency=1,Font=3,Name="Title",Parent={2},Position=UDim2.new(0,0,0,-5),Size=UDim2.new(1,0,0,26),Text="基本颜色",TextColor3=Color3.new(0.86274516582489,0.86274516582489,0.86274516582489),TextSize=14,TextXAlignment=0,}},
+				{3,"TextLabel",{BackgroundColor3=Color3.new(1,1,1),BackgroundTransparency=1,Font=3,Name="Title",Parent={2},Position=UDim2.new(0,0,0,-5),Size=UDim2.new(1,0,0,26),Text="基础颜色",TextColor3=Color3.new(0.86274516582489,0.86274516582489,0.86274516582489),TextSize=14,TextXAlignment=0,}},
 				{4,"Frame",{BackgroundColor3=Color3.new(0.14901961386204,0.14901961386204,0.14901961386204),BorderColor3=Color3.new(0.12549020349979,0.12549020349979,0.12549020349979),Name="Blue",Parent={1},Position=UDim2.new(1,-63,0,255),Size=UDim2.new(0,52,0,16),}},
 				{5,"TextBox",{BackgroundColor3=Color3.new(0.25098040699959,0.25098040699959,0.25098040699959),BackgroundTransparency=1,BorderColor3=Color3.new(0.37647062540054,0.37647062540054,0.37647062540054),Font=3,Name="Input",Parent={4},Position=UDim2.new(0,2,0,0),Size=UDim2.new(0,50,0,16),Text="0",TextColor3=Color3.new(0.86274516582489,0.86274516582489,0.86274516582489),TextSize=14,TextXAlignment=0,}},
 				{6,"Frame",{BackgroundColor3=Color3.new(1,1,1),BackgroundTransparency=1,BorderSizePixel=0,Name="ArrowFrame",Parent={5},Position=UDim2.new(1,-16,0,0),Size=UDim2.new(0,16,1,0),}},
@@ -8923,7 +8773,7 @@ local function main()
 				{21,"Frame",{BackgroundColor3=Color3.new(0,0,0),BorderSizePixel=0,Name="Line",Parent={20},Position=UDim2.new(0,9,0,0),Size=UDim2.new(0,2,0,20),}},
 				{22,"Frame",{BackgroundColor3=Color3.new(0,0,0),BorderSizePixel=0,Name="Line",Parent={20},Position=UDim2.new(0,0,0,9),Size=UDim2.new(0,20,0,2),}},
 				{23,"Frame",{BackgroundColor3=Color3.new(1,1,1),BackgroundTransparency=1,Name="CustomColors",Parent={1},Position=UDim2.new(0,5,0,210),Size=UDim2.new(0,180,0,90),}},
-				{24,"TextLabel",{BackgroundColor3=Color3.new(1,1,1),BackgroundTransparency=1,Font=3,Name="Title",Parent={23},Size=UDim2.new(1,0,0,20),Text="自定义颜色（右键=设置）",TextColor3=Color3.new(0.86274516582489,0.86274516582489,0.86274516582489),TextSize=14,TextXAlignment=0,}},
+				{24,"TextLabel",{BackgroundColor3=Color3.new(1,1,1),BackgroundTransparency=1,Font=3,Name="Title",Parent={23},Size=UDim2.new(1,0,0,20),Text="自定义颜色（右键 = 设置）",TextColor3=Color3.new(0.86274516582489,0.86274516582489,0.86274516582489),TextSize=14,TextXAlignment=0,}},
 				{25,"Frame",{BackgroundColor3=Color3.new(0.14901961386204,0.14901961386204,0.14901961386204),BorderColor3=Color3.new(0.12549020349979,0.12549020349979,0.12549020349979),Name="Green",Parent={1},Position=UDim2.new(1,-63,0,233),Size=UDim2.new(0,52,0,16),}},
 				{26,"TextBox",{BackgroundColor3=Color3.new(0.25098040699959,0.25098040699959,0.25098040699959),BackgroundTransparency=1,BorderColor3=Color3.new(0.37647062540054,0.37647062540054,0.37647062540054),Font=3,Name="Input",Parent={25},Position=UDim2.new(0,2,0,0),Size=UDim2.new(0,50,0,16),Text="0",TextColor3=Color3.new(0.86274516582489,0.86274516582489,0.86274516582489),TextSize=14,TextXAlignment=0,}},
 				{27,"Frame",{BackgroundColor3=Color3.new(1,1,1),BackgroundTransparency=1,BorderSizePixel=0,Name="ArrowFrame",Parent={26},Position=UDim2.new(1,-16,0,0),Size=UDim2.new(0,16,1,0),}},
@@ -8951,7 +8801,7 @@ local function main()
 				{49,"Frame",{BackgroundColor3=Color3.new(0.86274510622025,0.86274510622025,0.86274510622025),BorderSizePixel=0,Parent={48},Position=UDim2.new(0,8,0,5),Size=UDim2.new(0,1,0,1),}},
 				{50,"Frame",{BackgroundColor3=Color3.new(0.86274510622025,0.86274510622025,0.86274510622025),BorderSizePixel=0,Parent={48},Position=UDim2.new(0,7,0,4),Size=UDim2.new(0,3,0,1),}},
 				{51,"Frame",{BackgroundColor3=Color3.new(0.86274510622025,0.86274510622025,0.86274510622025),BorderSizePixel=0,Parent={48},Position=UDim2.new(0,6,0,3),Size=UDim2.new(0,5,0,1),}},
-				{52,"TextLabel",{BackgroundColor3=Color3.new(1,1,1),BackgroundTransparency=1,Font=3,Name="Title",Parent={39},Position=UDim2.new(0,-40,0,0),Size=UDim2.new(0,34,1,0),Text="色调：",TextColor3=Color3.new(0.86274516582489,0.86274516582489,0.86274516582489),TextSize=14,TextXAlignment=1,}},
+				{52,"TextLabel",{BackgroundColor3=Color3.new(1,1,1),BackgroundTransparency=1,Font=3,Name="Title",Parent={39},Position=UDim2.new(0,-40,0,0),Size=UDim2.new(0,34,1,0),Text="色相：",TextColor3=Color3.new(0.86274516582489,0.86274516582489,0.86274516582489),TextSize=14,TextXAlignment=1,}},
 				{53,"Frame",{BackgroundColor3=Color3.new(1,1,1),BorderColor3=Color3.new(0.21568627655506,0.21568627655506,0.21568627655506),Name="Preview",Parent={1},Position=UDim2.new(1,-260,0,211),Size=UDim2.new(0,35,1,-245),}},
 				{54,"Frame",{BackgroundColor3=Color3.new(0.14901961386204,0.14901961386204,0.14901961386204),BorderColor3=Color3.new(0.12549020349979,0.12549020349979,0.12549020349979),Name="Red",Parent={1},Position=UDim2.new(1,-63,0,211),Size=UDim2.new(0,52,0,16),}},
 				{55,"TextBox",{BackgroundColor3=Color3.new(0.25098040699959,0.25098040699959,0.25098040699959),BackgroundTransparency=1,BorderColor3=Color3.new(0.37647062540054,0.37647062540054,0.37647062540054),Font=3,Name="Input",Parent={54},Position=UDim2.new(0,2,0,0),Size=UDim2.new(0,50,0,16),Text="0",TextColor3=Color3.new(0.86274516582489,0.86274516582489,0.86274516582489),TextSize=14,TextXAlignment=0,}},
@@ -9178,6 +9028,7 @@ local function main()
 					hue = math.clamp(math.floor(num),0,359)/359
 					local hsvColor = Color3.fromHSV(hue,sat,val)
 					red,green,blue = hsvColor.r,hsvColor.g,hsvColor.b
+
 					hueInput.Text = tostring(hue*359)
 					updateColor(1)
 				end
@@ -9348,7 +9199,7 @@ local function main()
 			local window = Lib.Window.new()
 			window.Resizable = false
 			window:Resize(680,265)
-			window:SetTitle("NumberSequence编辑器")
+			window:SetTitle("数字序列编辑器")
 			newMt.Window = window
 			newMt.Gui = window.Gui
 			for i,v in pairs(guiContents:GetChildren()) do
@@ -9848,7 +9699,7 @@ local function main()
 			local window = Lib.Window.new()
 			window.Resizable = false
 			window:Resize(650,150)
-			window:SetTitle("ColorSequence编辑器")
+			window:SetTitle("颜色序列编辑器")
 			newMt.Window = window
 			newMt.Gui = window.Gui
 			for i,v in pairs(guiContents:GetChildren()) do
@@ -10073,7 +9924,7 @@ local function main()
 					local editor = newMt.ColorPicker
 					if not editor then
 						editor = Lib.ColorPicker.new()
-						editor.Window:SetTitle("ColorSequence颜色选择器")
+						editor.Window:SetTitle("ColorSequence Color Picker")
 
 						editor.OnSelect:Connect(function(col)
 							if currentPoint then
@@ -10370,13 +10221,13 @@ local function main()
 						self.Selected = options[1]
 						self.GuiElems.Label.Text = options[1]
 					else
-						self.GuiElems.Label.Text = "- 选择 -"
+						self.GuiElems.Label.Text = "- 请选择 -"
 					end
 				else
 					self.GuiElems.Label.Text = self.Selected
 				end
 			else
-				self.GuiElems.Label.Text = "- 选择 -"
+				self.GuiElems.Label.Text = "- 请选择 -"
 			end
 		end
 
@@ -10398,7 +10249,7 @@ local function main()
 			local onClick = function(option) self.Selected = option self.OnSelect:Fire(option) self:Update() end
 
 			if self.CanBeEmpty then
-				context:Add({Name = "- 选择 -", function() self.Selected = nil self.OnSelect:Fire(nil) self:Update() end})
+				context:Add({Name = "- 请选择 -", function() self.Selected = nil self.OnSelect:Fire(nil) self:Update() end})
 			end
 
 			for i = 1,#options do
@@ -10559,16 +10410,9 @@ end
 return {InitDeps = initDeps, InitAfterMain = initAfterMain, Main = main}
 end,
 ["ModelViewer"] = function()
---[[
-	Model Viewer App Module
-	
-	A model viewer :3
-]]
-
--- Common Locals
-local Main,Lib,Apps,Settings -- Main Containers
-local Explorer, Properties, ScriptViewer, ModelViewer, Notebook -- Major Apps
-local API,RMD,env,service,plr,create,createSimple -- Main Locals
+local Main,Lib,Apps,Settings
+local Explorer, Properties, ScriptViewer, ModelViewer, Notebook
+local API,RMD,env,service,plr,create,createSimple
 
 local function initDeps(data)
 	Main = data.Main
@@ -10589,7 +10433,6 @@ local function initAfterMain()
 	Explorer = Apps.Explorer
 	Properties = Apps.Properties
 	ScriptViewer = Apps.ScriptViewer
-	ModelViewer = Apps.ModelViewer
 	Notebook = Apps.Notebook
 end
 
@@ -10628,7 +10471,7 @@ local function main()
 			viewportFrame:ClearAllChildren()
 			
 			ModelViewer.IsViewing = false
-			window:SetTitle("3D预览")
+			window:SetTitle("3D 预览")
 			pathLabel.Gui.Text = ""
 		end
 	end
@@ -10648,7 +10491,6 @@ local function main()
 				model:SetPrimaryPartCFrame(CFrame.new(0, 0, 0))
 			elseif item:IsA("Model") then
 				item.Archivable = true
-
 				if #item:GetChildren() == 0 then return end
 				
 				model = item:Clone()
@@ -10693,8 +10535,8 @@ local function main()
 			camera.Parent = viewportFrame
 			camera.FieldOfView = 60
 			
-			window:SetTitle(item.Name.." - 3D预览")
-			pathLabel.Gui.Text = "路径: " .. getPath(originalModel)
+			window:SetTitle(item.Name.." - 3D 预览")
+			pathLabel.Gui.Text = "路径： " .. getPath(originalModel)
 			window:Show()
 			ModelViewer.IsViewing = true
 		end
@@ -10702,9 +10544,9 @@ local function main()
 
 	ModelViewer.Init = function()
 		window = Lib.Window.new()
-		window:SetTitle("3D预览")
+		window:SetTitle("3D 预览")
 		window:Resize(350,200)
-		ModelViewer.Window = window
+		ModelViewer.Window =  window
 		
 		viewportFrame = Instance.new("ViewportFrame")
 		viewportFrame.Parent = window.GuiElems.Content
@@ -10838,7 +10680,7 @@ local function main()
 		context:Register("SAVE_INST",{Name = "保存到文件", OnClick = function()
 			if model then
 				Lib.SaveAsPrompt("Place_"..game.PlaceId.."_"..originalModel.Name.."_"..os.time(), function(filename)
-					window:SetTitle(originalModel.Name.." - 模型查看器 - 保存中")	
+					window:SetTitle(originalModel.Name.." - Model Viewer - 保存中")	
 					
 					local success, result = pcall(env.saveinstance,
 					originalModel, filename,
@@ -10849,19 +10691,19 @@ local function main()
 					)
 					
 					if success then
-						window:SetTitle(originalModel.Name.." - 模型查看器 - 已保存")
+						window:SetTitle(originalModel.Name.." - Model Viewer - 已保存")
 						context:Hide()
 						task.wait(5)
 						if model then
-							window:SetTitle(originalModel.Name.." - 模型查看器")
+							window:SetTitle(originalModel.Name.." - Model Viewer")
 						end
 					else
-						window:SetTitle(originalModel.Name.." - 模型查看器 - 错误")
+						window:SetTitle(originalModel.Name.." - Model Viewer - 错误")
 						warn("Error while saving model: "..result)
 						context:Hide()
 						task.wait(5)
 						if model then
-							window:SetTitle(originalModel.Name.." - 模型查看器")
+							window:SetTitle(originalModel.Name.." - Model Viewer")
 						end
 					end
 				end)
@@ -10870,6 +10712,7 @@ local function main()
 		
 		context:Register("ENABLE_AUTO_ROTATE",{Name = "启用自动旋转", OnClick = function()
 			ModelViewer.AutoRotate = true
+			
 		end})
 		context:Register("DISABLE_AUTO_ROTATE",{Name = "禁用自动旋转", OnClick = function()
 			ModelViewer.AutoRotate = false
@@ -10946,7 +10789,6 @@ local function main()
 	return ModelViewer
 end
 
--- TODO: Remove when open source
 if gethsfuncs then
 	_G.moduleData = {InitDeps = initDeps, InitAfterMain = initAfterMain, Main = main}
 else
@@ -10954,16 +10796,9 @@ else
 end
 end,
 ["Properties"] = function()
---[[
-	Properties App Module
-	
-	The main properties interface
-]]
-
--- Common Locals
-local Main,Lib,Apps,Settings -- Main Containers
-local Explorer, Properties, ScriptViewer, Notebook -- Major Apps
-local API,RMD,env,service,plr,create,createSimple -- Main Locals
+local Main,Lib,Apps,Settings
+local Explorer, Properties, ScriptViewer, Notebook
+local API,RMD,env,service,plr,create,createSimple
 
 local function initDeps(data)
 	Main = data.Main
@@ -10993,7 +10828,7 @@ local function main()
 	local window, toolBar, propsFrame
 	local scrollV, scrollH
 	local categoryOrder
-	local props,viewList,expanded,indexableProps,propEntries,autoUpdateObjs = {},{},{},{},{},{}
+	local props,viewList,expanded,indexableProps,propEntries,autoUpdateObjs = {},{},{},{},{},{},{}
 	local inputBox,inputTextBox,inputProp
 	local checkboxes,propCons = {},{}
 	local table,string = table,string
@@ -11014,7 +10849,7 @@ local function main()
 	Properties.ClassLists = {}
 	Properties.SearchText = ""
 
-	Properties.AddAttributeProp = {Category = "Attributes", Class = "", Name = "", SpecialRow = "AddAttribute", Tags = {}}
+	Properties.AddAttributeProp = {Category = "属性", Class = "", Name = "", SpecialRow = "AddAttribute", Tags = {}}
 	Properties.SoundPreviewProp = {Category = "Data", ValueType = {Name = "SoundPlayer"}, Class = "Sound", Name = "Preview", Tags = {}}
 
 	Properties.IgnoreProps = {
@@ -11402,7 +11237,7 @@ local function main()
 					if not foundAttrs[name] then
 						local category = (typ == "Instance" and "Class") or (typ == "EnumItem" and "Enum") or "Other"
 						local valType = {Name = typeNameConvert[typ] or typ, Category = category}
-						local attrProp = {IsAttribute = true, Name = "ATTR_"..name, AttributeName = name, DisplayName = name, Class = "Instance", ValueType = valType, Category = "Attributes", Tags = {}}
+						local attrProp = {IsAttribute = true, Name = "ATTR_"..name, AttributeName = name, DisplayName = name, Class = "Instance", ValueType = valType, Category = "属性", Tags = {}}
 						props[propCount] = attrProp
 						propCount = propCount + 1
 						attrCount = attrCount + 1
@@ -11959,16 +11794,16 @@ local function main()
 			saveButton.OnClick:Connect(function()
 				local name = nameBox:GetText()
 				if #name > 100 then
-					errorLabel.Text = "错误：名称超过100个字符"
+					errorLabel.Text = "Error: Name over 100 chars"
 					return
 				elseif name:sub(1,3) == "RBX" then
-					errorLabel.Text = "错误：名称以'RBX'开头"
+					errorLabel.Text = "Error: Name begins with 'RBX'"
 					return
 				end
 
 				local typ = typeChooser.Selected
 				local valType = {Name = Properties.TypeNameConvert[typ] or typ, Category = "DataType"}
-				local attrProp = {IsAttribute = true, Name = "ATTR_"..name, AttributeName = name, DisplayName = name, Class = "Instance", ValueType = valType, Category = "Attributes", Tags = {}}
+				local attrProp = {IsAttribute = true, Name = "ATTR_"..name, AttributeName = name, DisplayName = name, Class = "Instance", ValueType = valType, Category = "属性", Tags = {}}
 
 				Settings.Properties.ShowAttributes = true
 				Properties.SetProp(attrProp,Properties.DefaultPropValue[valType.Name],true,Properties.EditingAttribute)
@@ -12400,9 +12235,9 @@ local function main()
 
 						local showingAttrs = Settings.Properties.ShowAttributes
 						toggleAttributes.Position = UDim2.new(1,-85-leftOffset,0,0)
-						toggleAttributes.Text = (showingAttrs and "[设置：开]" or "[设置：关]")
+						toggleAttributes.Text = (showingAttrs and "[Setting: ON]" or "[Setting: OFF]")
 						toggleAttributes.TextColor3 = Settings.Theme.Text
-						toggleAttributes.Visible = (prop.CategoryName == "Attributes")
+						toggleAttributes.Visible = (prop.CategoryName == "属性")
 					else
 						local propName = prop.Name
 						local typeData = prop.ValueType
@@ -12633,7 +12468,7 @@ local function main()
 
 	Properties.InitInputBox = function()
 		inputBox = create({
-			{1,"Frame",{BackgroundColor3=Color3.new(0.14901961386204,0.14901961386204,0.14901961386204),BorderSizePixel=0,Name="InputBox",Size=UDim2.new(0,200,0,22),Visible=false,ZIndex=2,}},
+			{1,"Frame",{BackgroundColor3=Color3.new(0.14901961386204,0.14901961386204,0.14901961386204,0.14901961386204),BorderSizePixel=0,Name="InputBox",Size=UDim2.new(0,200,0,22),Visible=false,ZIndex=2,}},
 			{2,"TextBox",{BackgroundColor3=Color3.new(0.17647059261799,0.17647059261799,0.17647059261799),BackgroundTransparency=1,BorderColor3=Color3.new(0.062745101749897,0.51764708757401,1),BorderSizePixel=0,ClearTextOnFocus=false,Font=3,Parent={1},PlaceholderColor3=Color3.new(0.69803923368454,0.69803923368454,0.69803923368454),Position=UDim2.new(0,3,0,0),Size=UDim2.new(1,-6,1,0),Text="",TextColor3=Color3.new(1,1,1),TextSize=14,TextXAlignment=0,ZIndex=2,}},
 		})
 		inputTextBox = inputBox.TextBox
@@ -12719,9 +12554,9 @@ local function main()
 			{3,"TextLabel",{BackgroundColor3=Color3.new(1,1,1),BackgroundTransparency=1,Font=3,Name="PropName",Parent={2},Position=UDim2.new(0,2,0,0),Size=UDim2.new(1,-2,1,0),Text="Anchored",TextColor3=Color3.new(1,1,1),TextSize=14,TextTransparency=0.10000000149012,TextTruncate=1,TextXAlignment=0,}},
 			{4,"TextButton",{BackgroundColor3=Color3.new(1,1,1),BackgroundTransparency=1,ClipsDescendants=true,Font=3,Name="Expand",Parent={2},Position=UDim2.new(0,-20,0,1),Size=UDim2.new(0,20,0,20),Text="",TextSize=14,Visible=false,}},
 			{5,"ImageLabel",{BackgroundColor3=Color3.new(1,1,1),BackgroundTransparency=1,Image="rbxassetid://5642383285",ImageRectOffset=Vector2.new(144,16),ImageRectSize=Vector2.new(16,16),Name="Icon",Parent={4},Position=UDim2.new(0,2,0,2),ScaleType=4,Size=UDim2.new(0,16,0,16),}},
-			{6,"TextButton",{BackgroundColor3=Color3.new(1,1,1),BackgroundTransparency=1,BorderSizePixel=0,Font=4,Name="ToggleAttributes",Parent={2},Position=UDim2.new(1,-85,0,0),Size=UDim2.new(0,85,0,22),Text="[设置：关]",TextColor3=Color3.new(1,1,1),TextSize=14,TextTransparency=0.10000000149012,Visible=false,}},
+			{6,"TextButton",{BackgroundColor3=Color3.new(1,1,1),BackgroundTransparency=1,BorderSizePixel=0,Font=4,Name="ToggleAttributes",Parent={2},Position=UDim2.new(1,-85,0,0),Size=UDim2.new(0,85,0,22),Text="[SETTING: OFF]",TextColor3=Color3.new(1,1,1),TextSize=14,TextTransparency=0.10000000149012,Visible=false,}},
 			{7,"Frame",{BackgroundColor3=Color3.new(0.04313725605607,0.35294118523598,0.68627452850342),BackgroundTransparency=1,BorderColor3=Color3.new(0.33725491166115,0.49019607901573,0.73725491762161),BorderSizePixel=0,Name="ValueFrame",Parent={1},Position=UDim2.new(1,-100,0,0),Size=UDim2.new(0,80,1,0),}},
-			{8,"Frame",{BackgroundColor3=Color3.new(0.14117647707462,0.14117647707462),BorderColor3=Color3.new(0.33725491166115,0.49019610881805,0.73725491762161),BorderSizePixel=0,Name="Line",Parent={7},Position=UDim2.new(0,-1,0,0),Size=UDim2.new(0,1,1,0),}},
+			{8,"Frame",{BackgroundColor3=Color3.new(0.14117647707462,0.14117647707462,0.14117647707462),BorderColor3=Color3.new(0.33725491166115,0.49019610881805,0.73725491762161),BorderSizePixel=0,Name="Line",Parent={7},Position=UDim2.new(0,-1,0,0),Size=UDim2.new(0,1,1,0),}},
 			{9,"TextButton",{BackgroundColor3=Color3.new(1,1,1),BackgroundTransparency=1,BorderSizePixel=0,Font=3,Name="ColorButton",Parent={7},Size=UDim2.new(0,20,0,22),Text="",TextColor3=Color3.new(1,1,1),TextSize=14,Visible=false,}},
 			{10,"Frame",{BackgroundColor3=Color3.new(1,1,1),BorderColor3=Color3.new(0,0,0),Name="ColorPreview",Parent={9},Position=UDim2.new(0,5,0,6),Size=UDim2.new(0,10,0,10),}},
 			{11,"UIGradient",{Parent={10},}},
@@ -12730,13 +12565,13 @@ local function main()
 			{14,"Frame",{BackgroundColor3=Color3.new(0.86274510622025,0.86274510622025,0.86274510622025),BorderSizePixel=0,Parent={12},Position=UDim2.new(0,7,0,8),Size=UDim2.new(0,3,0,1),}},
 			{15,"Frame",{BackgroundColor3=Color3.new(0.86274510622025,0.86274510622025,0.86274510622025),BorderSizePixel=0,Parent={12},Position=UDim2.new(0,6,0,7),Size=UDim2.new(0,5,0,1),}},
 			{16,"TextButton",{BackgroundColor3=Color3.new(1,1,1),BackgroundTransparency=1,Font=3,Name="ValueBox",Parent={7},Position=UDim2.new(0,4,0,0),Size=UDim2.new(1,-8,1,0),Text="",TextColor3=Color3.new(1,1,1),TextSize=14,TextTransparency=0.10000000149012,TextTruncate=1,TextXAlignment=0,}},
-			{17,"TextButton",{BackgroundColor3=Color3.new(1,1,1),BackgroundTransparency=1,BorderSizePixel=0,Font=3,Name="RightButton",Parent={7},Position=UDim2.new(1,-20,0,0),Size=UDim2.new(0,20,0,22),Text="...",TextColor3=Color3.new(1,1,1),TextSize=14,Visible=false,}},
+			{17,"TextButton",{BackgroundColor3=Color3.new(1,1,1),BackgroundTransparency=1,Font=3,Name="RightButton",Parent={7},Position=UDim2.new(1,-20,0,0),Size=UDim2.new(0,20,0,22),Text="...",TextColor3=Color3.new(1,1,1),TextSize=14,Visible=false,}},
 			{18,"TextButton",{BackgroundColor3=Color3.new(1,1,1),BackgroundTransparency=1,BorderSizePixel=0,Font=3,Name="SettingsButton",Parent={7},Position=UDim2.new(1,-20,0,0),Size=UDim2.new(0,20,0,22),Text="",TextColor3=Color3.new(1,1,1),TextSize=14,Visible=false,}},
 			{19,"Frame",{BackgroundColor3=Color3.new(1,1,1),BackgroundTransparency=1,Name="SoundPreview",Parent={7},Size=UDim2.new(1,0,1,0),Visible=false,}},
 			{20,"TextButton",{BackgroundColor3=Color3.new(1,1,1),BackgroundTransparency=1,BorderSizePixel=0,Font=3,Name="ControlButton",Parent={19},Size=UDim2.new(0,20,0,22),Text="",TextColor3=Color3.new(1,1,1),TextSize=14,}},
 			{21,"ImageLabel",{BackgroundColor3=Color3.new(1,1,1),BackgroundTransparency=1,Image="rbxassetid://5642383285",ImageRectOffset=Vector2.new(144,16),ImageRectSize=Vector2.new(16,16),Name="Icon",Parent={20},Position=UDim2.new(0,2,0,3),ScaleType=4,Size=UDim2.new(0,16,0,16),}},
 			{22,"Frame",{BackgroundColor3=Color3.new(0.3137255012989,0.3137255012989,0.3137255012989),BorderSizePixel=0,Name="TimeLine",Parent={19},Position=UDim2.new(0,26,0.5,-1),Size=UDim2.new(1,-34,0,2),}},
-			{23,"Frame",{BackgroundColor3=Color3.new(0.2352941185236,0.2352941185236,0.2352941185236,0.2352941185236),BorderColor3=Color3.new(0.1294117718935,0.1294117718935,0.1294117718935),Name="Slider",Parent={22},Position=UDim2.new(0,-4,0,-8),Size=UDim2.new(0,8,0,18),}},
+			{23,"Frame",{BackgroundColor3=Color3.new(0.2352941185236,0.2352941185236,0.2352941185236),BorderColor3=Color3.new(0.1294117718935,0.1294117718935,0.1294117718935),Name="Slider",Parent={22},Position=UDim2.new(0,-4,0,-8),Size=UDim2.new(0,8,0,18),}},
 			{24,"TextButton",{BackgroundColor3=Color3.new(1,1,1),BackgroundTransparency=1,BorderSizePixel=0,Font=3,Name="EditAttributeButton",Parent={1},Position=UDim2.new(1,-20,0,0),Size=UDim2.new(0,20,0,22),Text="",TextColor3=Color3.new(1,1,1),TextSize=14,}},
 			{25,"ImageLabel",{BackgroundColor3=Color3.new(1,1,1),BackgroundTransparency=1,Image="rbxassetid://5034718180",ImageTransparency=0.20000000298023,Name="Icon",Parent={24},Position=UDim2.new(0,2,0,3),Size=UDim2.new(0,16,0,16),}},
 			{26,"TextButton",{AutoButtonColor=false,BackgroundColor3=Color3.new(0.2352941185236,0.2352941185236,0.2352941185236),BorderSizePixel=0,Font=3,Name="RowButton",Parent={1},Size=UDim2.new(1,0,1,0),Text="添加属性",TextColor3=Color3.new(1,1,1),TextSize=14,TextTransparency=0.10000000149012,Visible=false,}},
@@ -12773,7 +12608,7 @@ local function main()
 			{11,"Frame",{BackgroundColor3=Color3.new(1,1,1),BackgroundTransparency=1,ClipsDescendants=true,Name="List",Parent={1},Position=UDim2.new(0,0,0,23),Size=UDim2.new(1,0,1,-23),}},
 		})
 
-		categoryOrder = API.CategoryOrder
+		categoryOrder =  API.CategoryOrder
 		for category,_ in next,categoryOrder do
 			if not Properties.CollapsedCategories[category] then
 				expanded["CAT_"..category] = true
@@ -12840,7 +12675,6 @@ local function main()
 	return Properties
 end
 
--- TODO: Remove when open source
 if gethsfuncs then
 	_G.moduleData = {InitDeps = initDeps, InitAfterMain = initAfterMain, Main = main}
 else
@@ -12848,16 +12682,9 @@ else
 end
 end,
 ["SaveInstance"] = function()
---[[
-	Save Instance App Module
-	
-	Revival of the old dex's Save Instance
-]] 
-
--- Common Locals
-local Main,Lib,Apps,Settings -- Main Containers
-local Explorer, Properties, ScriptViewer, SaveInstance, Notebook -- Major Apps
-local API,RMD,env,service,plr,create,createSimple -- Main Locals
+local Main,Lib,Apps,Settings
+local Explorer, Properties, ScriptViewer, SaveInstance, Notebook
+local API,RMD,env,service,plr,create,createSimple
 
 local function initDeps(data)
 	Main = data.Main
@@ -13022,7 +12849,7 @@ local function main()
 		Padding.PaddingRight = UDim.new(0, 10)
 		Padding.PaddingTop = UDim.new(0, 5)
 		
-		local Decompile = AddCheckbox("反编译脚本（LocalScript和ModuleScript）", SaveInstanceArgs.Decompile)
+		local Decompile = AddCheckbox("反编译脚本（LocalScript 与 ModuleScript）", SaveInstanceArgs.Decompile)
 		Decompile.OnInput:Connect(function()
 			SaveInstanceArgs.Decompile = Decompile.Toggled
 		end)
@@ -13032,7 +12859,7 @@ local function main()
 			SaveInstanceArgs.DecompileTimeout = tonumber(decompileTimeout.TextBox.Text)
 		end)
 		
-		local decompileThread = AddTextbox("反编译器最大线程数", "3", 15)
+		local decompileThread = AddTextbox("反编译最大线程", "3", 15)
 		decompileThread.TextBox.FocusLost:Connect(function()
 			SaveInstanceArgs.MaxThreads = tonumber(decompileThread.TextBox.Text)
 		end)
@@ -13053,7 +12880,7 @@ local function main()
 		end)
 
 		
-		local NilObj = AddCheckbox("保存Nil实例", SaveInstanceArgs.NilInstances)
+		local NilObj = AddCheckbox("保存 Nil 实例", SaveInstanceArgs.NilInstances)
 		NilObj.OnInput:Connect(function()
 			SaveInstanceArgs.NilInstances = NilObj.Toggled
 		end)
@@ -13068,7 +12895,7 @@ local function main()
 			SaveInstanceArgs.SavePlayers = SavePlayerObj.Toggled
 		end)
 		
-		local IsolateStarterPlr = AddCheckbox("隔离StarterPlayer", SaveInstanceArgs.IsolateStarterPlayer)
+		local IsolateStarterPlr = AddCheckbox("隔离 StarterPlayer", SaveInstanceArgs.IsolateStarterPlayer)
 		IsolateStarterPlr.OnInput:Connect(function()
 			SaveInstanceArgs.IsolateStarterPlayer = IsolateStarterPlr.Toggled
 		end)
@@ -13082,7 +12909,6 @@ local function main()
 		ShowStat.OnInput:Connect(function()
 			SaveInstanceArgs.ShowStatus = ShowStat.Toggled
 		end)
-		
 		
 		local FilenameTextBox = Lib.ViewportTextBox.new()
 		FilenameTextBox.Gui.Parent = window.GuiElems.Content
@@ -13131,7 +12957,6 @@ local function main()
 	return SaveInstance
 end
 
--- TODO: Remove when open source
 if gethsfuncs then
 	_G.moduleData = {InitDeps = initDeps, InitAfterMain = initAfterMain, Main = main}
 else
@@ -13139,15 +12964,9 @@ else
 end
 end,
 ["ScriptViewer"] = function()
---[[
-	Script Viewer App Module
-	
-	A script viewer that is basically a notepad
-]]
--- Common Locals
-local Main,Lib,Apps,Settings -- Main Containers
-local Explorer, Properties, ScriptViewer, Notebook -- Major Apps
-local API,RMD,env,service,plr,create,createSimple -- Main Locals
+local Main,Lib,Apps,Settings
+local Explorer, Properties, ScriptViewer, Notebook
+local API,RMD,env,service,plr,create,createSimple
 
 local function initDeps(data)
 	Main = data.Main
@@ -13203,7 +13022,7 @@ local function main()
 		local getupvalues = (debug and debug.getupvalues) or getupvalues or getupvals
 		local getconstants = (debug and debug.getconstants) or getconstants or getconsts
 		local getinfo = (debug and (debug.getinfo or debug.info)) or getinfo
-		local original = ("\n-- // Function Dumper made by King.Kevin\n-- // Script Path: %s\n\n--[["):format(getPath(scr))
+		local original = ("\n-- // Function Dumper made by King.Kevin\n-- // 脚本路径： %s\n\n--[["):format(getPath(scr))
 		local dump = original
 		local functions, function_count, data_base = {}, 0, {}
 		function functions:add_to_dump(str, indentation, new_line)
@@ -13380,7 +13199,7 @@ local function main()
 		clear.BackgroundTransparency = 1
 		clear.Size = UDim2.new(0.5,0,0,20)
 		clear.Position = UDim2.new(0.5,0,1,-20)
-		clear.Text = "清除"
+		clear.Text = "清空"
 		clear.TextColor3 = Color3.new(1,1,1)
 
 		clear.MouseButton1Click:Connect(function()
@@ -13395,16 +13214,16 @@ local function main()
 		if not s or not source then
 			PreviousScr = nil
 			dumpbtn.TextColor3 = Color3.new(0.5,0.5,0.5)
-			source = "-- 无法查看源代码。\n"
+			source = "-- 无法查看源码。\n"
 			
 			if Settings.ScriptViewer.ShowMoreInfo then
 				source = source .. "-- 脚本路径： "..getPath(scr).."\n"
 				if (scr.ClassName == "Script" and (scr.RunContext == Enum.RunContext.Legacy or scr.RunContext == Enum.RunContext.Server)) or not scr:IsA("LocalScript") then
-					source = source .. "-- 原因：脚本未在客户端运行。（尝试反编译ServerScript或RunContext为Server的Script）\n"
+					source = source .. "-- 原因： The script is not running on client. (attempt to decompile ServerScript or 'Script' with RunContext Server)\n"
 				elseif not env.isdecompile() then
-					source = source .. "-- 原因：您的执行器不支持反编译器。（缺少 'decompile' 函数且无 'getscriptbytecode' 函数作为备用）\n"
+					source = source .. "-- 原因： Your executor does not support decompiler. (missing 'decompile' function and 'getscriptbytecode' function as fallback)\n"
 				else
-					source = source .. "-- 原因：未知错误。\n"
+					source = source .. "-- 原因： Unknown Error.\n"
 				end
 				source = source .. "-- 执行器： "..executorName.." ("..executorVersion..")"
 			end
@@ -13417,7 +13236,7 @@ local function main()
 			source = "-- 脚本路径： "..getPath(scr).."\n"
 			
 			if Settings.ScriptViewer.ShowMoreInfo then
-				source = source .. "-- 耗时"..tostring(math.floor( (tick() - oldtick) * 100) / 100).."秒反编译。\n"
+				source = source .. "-- Took "..tostring(math.floor( (tick() - oldtick) * 100) / 100).."s to decompile.\n"
 				source = source .. "-- 执行器： "..executorName.." ("..executorVersion..")\n\n"
 			end
 			
@@ -13434,7 +13253,6 @@ local function main()
 	return ScriptViewer
 end
 
--- TODO: Remove when open source
 if gethsfuncs then
 	_G.moduleData = {InitDeps = initDeps, InitAfterMain = initAfterMain, Main = main}
 else
@@ -13442,16 +13260,9 @@ else
 end
 end,
 ["SettingsWindow"] = function()
---[[
-	Save Instance App Module
-	
-	Revival of the old dex's Save Instance
-]] 
-
--- Common Locals
-local Main,Lib,Apps,Settings -- Main Containers
-local Explorer, Properties, ScriptViewer, SettingsWindow, Notebook -- Major Apps
-local API,RMD,env,service,plr,create,createSimple -- Main Locals
+local Main,Lib,Apps,Settings
+local Explorer, Properties, ScriptViewer, SettingsWindow, Notebook
+local API,RMD,env,service,plr,create,createSimple
 
 local function initDeps(data)
 	Main = data.Main
@@ -13638,7 +13449,7 @@ local function main()
 
 			local reloadButton = Lib.Button.new()
 			local nameLabel = Lib.Label.new()
-			nameLabel.Text = "应用当前设置需要重新加载。\n任何未保存的进度都将丢失。\n确定吗？"
+			nameLabel.Text = "应用当前设置需要重载。\n未保存的进度将丢失。\n确定吗？"
 			nameLabel.Position = UDim2.new(0,30,0,20)
 			nameLabel.Size = UDim2.new(0,40,0,20)
 			win:Add(nameLabel)
@@ -13743,7 +13554,7 @@ local function main()
 			Settings.Explorer.PartSelectionBox = partSelectionBox.Toggled
 		end)
 		
-		local copypathUseChildren = AddCheckbox("使用GetChildren复制路径", Settings.Explorer.CopyPathUseGetChildren)
+		local copypathUseChildren = AddCheckbox("复制路径时使用 GetChildren", Settings.Explorer.CopyPathUseGetChildren)
 		copypathUseChildren.OnInput:Connect(function()
 			Settings.Explorer.CopyPathUseGetChildren = copypathUseChildren.Toggled
 		end)
@@ -13764,7 +13575,7 @@ local function main()
 		showAttributes.OnInput:Connect(function()
 			Settings.Properties.ShowAttributes = showAttributes.Toggled
 		end)
-		local clearOnFocus = AddCheckbox("聚焦时清除", Settings.Properties.ClearOnFocus)
+		local clearOnFocus = AddCheckbox("聚焦时清空", Settings.Properties.ClearOnFocus)
 		clearOnFocus.OnInput:Connect(function()
 			Settings.Properties.ClearOnFocus = clearOnFocus.Toggled
 		end)
@@ -13777,15 +13588,15 @@ local function main()
 		end)
 		
 		AddSeperator("反编译器")
-		AddText("如果执行器不支持反编译，将使用备用选项。")
-		AddText("使用备用反编译器需要'getbytecode'。")
+		AddText("If executor does not support decompile, it will use the fallback option.")
+		AddText("'getbytecode' is mandatory to use fallback decompilers.")
 		local decompilerOption = {"Konstant", "AdvancedDecompiler", "Shiny"}
-		local decompiler = AddDropdown("备用反编译器", decompilerOption, Settings.Decompiler.DecompilerFallback, false, 125)
+		local decompiler = AddDropdown("反编译回退方案", decompilerOption, Settings.Decompiler.DecompilerFallback, false, 125)
 		decompiler.OnSelect:Connect(function()
 			Settings.Decompiler.DecompilerFallback = decompiler.Selected
 		end)
 		
-		local ShinyPort = AddTextbox("Shiny反编译器端口", tostring(Settings.Decompiler.ShinyDecompilerPort), 50)
+		local ShinyPort = AddTextbox("Shiny 反编译端口", tostring(Settings.Decompiler.ShinyDecompilerPort), 50)
 		ShinyPort.FocusLost:Connect(function()
 			local portinput = tonumber(ShinyPort.Text)
 			if not portinput then
@@ -13799,7 +13610,7 @@ local function main()
 			end
 		end)
 		
-		local preferFallback = AddCheckbox("优先使用备用反编译器", Settings.Decompiler.PreferDecompilerFallback)
+		local preferFallback = AddCheckbox("优先使用回退反编译器", Settings.Decompiler.PreferDecompilerFallback)
 		preferFallback.OnInput:Connect(function()
 			Settings.Decompiler.PreferDecompilerFallback = preferFallback.Toggled
 		end)
@@ -13838,7 +13649,6 @@ local function main()
 	return SettingsWindow
 end
 
--- TODO: Remove when open source
 if gethsfuncs then
 	_G.moduleData = {InitDeps = initDeps, InitAfterMain = initAfterMain, Main = main}
 else
@@ -13883,11 +13693,9 @@ end
 
 local isFsSupported = readfile and writefile and isfile and isfolder and listfiles and delfile and delfolder
 
--- Main vars
-local Main, Explorer, Properties, ScriptViewer, Console, SaveInstance, ModelViewer, SettingsWindow--[[, SecretServicePanel]], DefaultSettings, Notebook, Serializer, Lib local ggv = getgenv or nil
+local Main, Explorer, Properties, ScriptViewer, Console, SaveInstance, ModelViewer, SettingsWindow, DefaultSettings, Notebook, Serializer, Lib local ggv = getgenv or nil
 local API, RMD
 
--- Default Settings
 DefaultSettings = (function()
 	local rgb = Color3.fromRGB	
 	
@@ -13978,7 +13786,6 @@ DefaultSettings = (function()
 	}
 end)()
 
--- Vars
 local Settings = DefaultSettings or {}
 local Apps = {}
 local env = {}
@@ -14014,7 +13821,6 @@ local createSimple = function(class,props)
 	end
 	return inst
 end
-
 Main = (function()
 	local Main = {}
 
@@ -14045,6 +13851,7 @@ Main = (function()
 		for i = 2, 25 do
 			output = output .. string.char(math.random(1,250))
 		end
+		
 		return output
 	end
 	
@@ -14269,8 +14076,10 @@ Main = (function()
 		env.checkcaller = checkcaller
 		env.getreg = getreg
 		env.getgc = getgc
+		
 		env.hookfunction = hookfunction
 		env.hookmetamethod = hookmetamethod
+
 		env.getscriptbytecode = getscriptbytecode
 		env.setfflag = setfflag
 		env.protectgui = protect_gui or (syn and syn.protect_gui)
@@ -14298,7 +14107,7 @@ Main = (function()
 		env.isdecompilefallback = function()
 			return typeof(decompile) ~= "function" or typeof(getscriptbytecode) == "function" or false
 		end
-		
+
 		local AdvancedDecompilerCache
 		pcall(function()
 			AdvancedDecompilerCache = loadstring(game:HttpGet("https://raw.githubusercontent.com/"..Main.GitName.."/Advanced-Decompiler-V3/refs/heads/main/init.lua"))()
@@ -14308,6 +14117,7 @@ Main = (function()
 		
 		local function KonstantDec(...)
 			local API = "http://api.plusgiant5.com"
+
 			local request = env.request
 
 			local function call(konstantType, scriptPath)
@@ -14634,7 +14444,7 @@ Main = (function()
 		insertAbove(categoryOrder,"Assembly","Surface Inputs")
 		insertAbove(categoryOrder,"Character","Controls")
 		categoryOrder[#categoryOrder+1] = "Unscriptable"
-		categoryOrder[#categoryOrder+1] = "Attributes"
+		categoryOrder[#categoryOrder+1] = "属性"
 
 		local categoryOrderMap = {}
 		for i = 1,#categoryOrder do
@@ -14772,13 +14582,13 @@ Main = (function()
 			{2,"Frame",{Active=true,BackgroundColor3=Color3.new(0.20392157137394,0.20392157137394,0.20392157137394),BorderSizePixel=0,Name="Main",Parent={1},Position=UDim2.new(0.5,-175,0.5,-100),Size=UDim2.new(0,350,0,200),}},
 			{3,"Frame",{BackgroundColor3=Color3.new(0.17647059261799,0.17647059261799,0.17647059261799),BorderSizePixel=0,ClipsDescendants=true,Name="Holder",Parent={2},Size=UDim2.new(1,0,1,0),}},
 			{4,"UIGradient",{Parent={3},Rotation=30,Transparency=NumberSequence.new({NumberSequenceKeypoint.new(0,1,0),NumberSequenceKeypoint.new(1,1,0),}),}},
-			{5,"TextLabel",{BackgroundColor3=Color3.new(1,1,1),BackgroundTransparency=1,Font=4,Name="Title",Parent={3},Position=UDim2.new(0,-190,0,15),Size=UDim2.new(0,100,0,50),Text="Dex++",TextColor3=Color3.new(1,1,1),TextSize=50,TextTransparency=1,}},
+			{5,"TextLabel",{BackgroundColor3=Color3.new(1,1,1),BackgroundTransparency=1,Font=4,Name="Title",Parent={3},Position=UDim2.new(0,-190,0,15),Size=UDim2.new(0,100,0,50),Text="Dex",TextColor3=Color3.new(1,1,1),TextSize=50,TextTransparency=1,}},
 			{6,"TextLabel",{BackgroundColor3=Color3.new(1,1,1),BackgroundTransparency=1,Font=3,Name="Desc",Parent={3},Position=UDim2.new(0,-230,0,60),Size=UDim2.new(0,180,0,25),Text="终极调试套件",TextColor3=Color3.new(1,1,1),TextSize=18,TextTransparency=1,}},
-			{7,"TextLabel",{BackgroundColor3=Color3.new(1,1,1),BackgroundTransparency=1,Font=3,Name="StatusText",Parent={3},Position=UDim2.new(0,20,0,110),Size=UDim2.new(0,180,0,25),Text="Fetching API",TextColor3=Color3.new(1,1,1),TextSize=14,TextTransparency=1,}},
+			{7,"TextLabel",{BackgroundColor3=Color3.new(1,1,1),BackgroundTransparency=1,Font=3,Name="StatusText",Parent={3},Position=UDim2.new(0,20,0,110),Size=UDim2.new(0,180,0,25),Text="正在获取 API",TextColor3=Color3.new(1,1,1),TextSize=14,TextTransparency=1,}},
 			{8,"Frame",{BackgroundColor3=Color3.new(0.20392157137394,0.20392157137394,0.20392157137394),BorderSizePixel=0,Name="ProgressBar",Parent={3},Position=UDim2.new(0,110,0,145),Size=UDim2.new(0,0,0,4),}},
 			{9,"Frame",{BackgroundColor3=Color3.new(0.2392156869173,0.56078433990479,0.86274510622025),BorderSizePixel=0,Name="Bar",Parent={8},Size=UDim2.new(0,0,1,0),}},
 			{10,"ImageLabel",{BackgroundColor3=Color3.new(1,1,1),BackgroundTransparency=1,Image="rbxassetid://2764171053",ImageColor3=Color3.new(0.17647059261799,0.17647059261799,0.17647059261799),Parent={8},ScaleType=1,Size=UDim2.new(1,0,1,0),SliceCenter=Rect.new(2,2,254,254),}},
-			{11,"TextLabel",{BackgroundColor3=Color3.new(1,1,1),BackgroundTransparency=1,Font=3,Name="Creator",Parent={2},Position=UDim2.new(1,-110,1,-20),Size=UDim2.new(0,105,0,20),Text="由Chillz开发。",TextColor3=Color3.new(1,1,1),TextSize=14,TextXAlignment=1,}},
+			{11,"TextLabel",{BackgroundColor3=Color3.new(1,1,1),BackgroundTransparency=1,Font=3,Name="Creator",Parent={2},Position=UDim2.new(1,-110,1,-20),Size=UDim2.new(0,105,0,20),Text="由 Chillz 开发。",TextColor3=Color3.new(1,1,1),TextSize=14,TextXAlignment=1,}},
 			{12,"UIGradient",{Parent={11},Transparency=NumberSequence.new({NumberSequenceKeypoint.new(0,1,0),NumberSequenceKeypoint.new(1,1,0),}),}},
 			{13,"TextLabel",{BackgroundColor3=Color3.new(1,1,1),BackgroundTransparency=1,Font=3,Name="Version",Parent={2},Position=UDim2.new(1,-110,1,-35),Size=UDim2.new(0,105,0,20),Text=Main.Version,TextColor3=Color3.new(1,1,1),TextSize=14,TextXAlignment=1,}},
 			{14,"UIGradient",{Parent={13},Transparency=NumberSequence.new({NumberSequenceKeypoint.new(0,1,0),NumberSequenceKeypoint.new(1,1,0),}),}},
@@ -14977,6 +14787,7 @@ Main = (function()
 				app.Main.BackgroundColor3 = Settings.Theme.ButtonHover
 			end
 		end)
+		
 
 		app.Main.InputEnded:Connect(function(input)
 			if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
@@ -15008,7 +14819,7 @@ Main = (function()
 	Main.SetMainGuiOpen = function(val)
 		Main.MainGuiOpen = val
 
-		Main.MainGui.OpenButton.Text = val and "关闭" or "Dex++"
+		Main.MainGui.OpenButton.Text = val and "关闭" or "Dex"
 		if val then Main.MainGui.OpenButton.MainFrame.Visible = true end
 		Main.MainGui.OpenButton.MainFrame:TweenSize(val and UDim2.new(0,224,0,200) or UDim2.new(0,0,0,0),Enum.EasingDirection.Out,Enum.EasingStyle.Quad,0.2,true)
 		service.TweenService:Create(Main.MainGui.OpenButton,TweenInfo.new(0.2,Enum.EasingStyle.Quad,Enum.EasingDirection.Out),{BackgroundTransparency = val and 0 or (Lib.CheckMouseInGui(Main.MainGui.OpenButton) and 0 or 0.2)}):Play()
@@ -15025,6 +14836,7 @@ Main = (function()
 		else
 			Main.MainGuiMouseEvent = service.UserInputService.InputBegan:Connect(function(input)
 				if (input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch) and not Lib.CheckMouseInGui(Main.MainGui.OpenButton) and not Lib.CheckMouseInGui(Main.MainGui.OpenButton.MainFrame) then
+
 					Main.SetMainGuiOpen(false)
 				end
 			end)
@@ -15034,7 +14846,7 @@ Main = (function()
 	Main.CreateMainGui = function()
 		local gui = create({
 			{1,"ScreenGui",{IgnoreGuiInset=true,Name="MainMenu",}},
-			{2,"TextButton",{AnchorPoint=Vector2.new(0.5,0),AutoButtonColor=false,BackgroundColor3=Color3.new(0.17647059261799,0.17647059261799,0.17647059261799),BorderSizePixel=0,Font=4,Name="OpenButton",Parent={1},Position=UDim2.new(0.5,0,0,2),Size=UDim2.new(0,55,0,32),Text="Dex++",TextColor3=Color3.new(1,1,1),TextSize=16,TextTransparency=0.20000000298023,}},
+			{2,"TextButton",{AnchorPoint=Vector2.new(0.5,0),AutoButtonColor=false,BackgroundColor3=Color3.new(0.17647059261799,0.17647059261799,0.17647059261799),BorderSizePixel=0,Font=4,Name="OpenButton",Parent={1},Position=UDim2.new(0.5,0,0,2),Size=UDim2.new(0,55,0,32),Text="Dex",TextColor3=Color3.new(1,1,1),TextSize=16,TextTransparency=0.20000000298023,}},
 			{3,"UICorner",{CornerRadius=UDim.new(0,4),Parent={2},}},
 			{4,"Frame",{AnchorPoint=Vector2.new(0.5,0),BackgroundColor3=Color3.new(0.17647059261799,0.17647059261799,0.17647059261799),ClipsDescendants=true,Name="MainFrame",Parent={2},Position=UDim2.new(0.5,0,1,-4),Size=UDim2.new(0,224,0,200),}},
 			{5,"UICorner",{CornerRadius=UDim.new(0,4),Parent={4},}},
@@ -15066,13 +14878,38 @@ Main = (function()
 		openButton.BackgroundTransparency = 0.2
 		openButton.MainFrame.Size = UDim2.new(0,0,0,0)
 		openButton.MainFrame.Visible = false
-		openButton.MouseButton1Click:Connect(function()
-			Main.SetMainGuiOpen(not Main.MainGuiOpen)
-		end)
+
+		local dragData = {dragging = false, moved = false, startX = 0, startY = 0, startOffX = 0, startOffY = 0}
 
 		openButton.InputBegan:Connect(function(input)
 			if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
 				service.TweenService:Create(Main.MainGui.OpenButton,TweenInfo.new(0,Enum.EasingStyle.Quad,Enum.EasingDirection.Out),{BackgroundTransparency = 0}):Play()
+			end
+			if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+				dragData.dragging = true
+				dragData.moved = false
+				dragData.startX = input.Position.X
+				dragData.startY = input.Position.Y
+				dragData.startOffX = openButton.Position.X.Offset
+				dragData.startOffY = openButton.Position.Y.Offset
+			end
+		end)
+
+		openButton.InputChanged:Connect(function(input)
+			if dragData.dragging and (input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch) then
+				local deltaX = input.Position.X - dragData.startX
+				local deltaY = input.Position.Y - dragData.startY
+				if math.sqrt(deltaX^2 + deltaY^2) > 3 then
+					dragData.moved = true
+				end
+				if dragData.moved then
+					local vs = service.UserInputService:GetViewportSize()
+					local bW = openButton.AbsoluteSize.X
+					local bH = openButton.AbsoluteSize.Y
+					local nOX = math.clamp(dragData.startOffX + deltaX, bW/2 - vs.X*0.5, vs.X*0.5 - bW/2)
+					local nOY = math.clamp(dragData.startOffY + deltaY, 0, vs.Y - bH)
+					openButton.Position = UDim2.new(0.5, nOX, 0, nOY)
+				end
 			end
 		end)
 
@@ -15080,10 +14917,16 @@ Main = (function()
 			if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
 				service.TweenService:Create(Main.MainGui.OpenButton,TweenInfo.new(0,Enum.EasingStyle.Quad,Enum.EasingDirection.Out),{BackgroundTransparency = Main.MainGuiOpen and 0 or 0.2}):Play()
 			end
+			if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+				dragData.dragging = false
+				if not dragData.moved then
+					Main.SetMainGuiOpen(not Main.MainGuiOpen)
+				end
+			end
 		end)
 		
 		local infoDexIntro, isInfoCD
-
+		
 		openButton.MainFrame.BottomFrame.Settings.MouseButton1Click:Connect(function()
 			if not SettingsWindow.Window.Closed then
 				SettingsWindow.Window:Hide()
@@ -15096,9 +14939,9 @@ Main = (function()
 			local duration = 1
 			local Infos = {
 				"贡献者 >>",
-				"Toon (IY Dex和PR)",
-				"Moon (Dex)",
-				"Cazan (3D预览)",
+				"Toon（IY Dex 与 PR）",
+				"Moon（Dex）",
+				"Cazan（3D 预览）",
 			}
 			
 			if isInfoCD then return end
@@ -15129,7 +14972,9 @@ Main = (function()
 		end)
 
 		Main.CreateApp({Name = "资源管理器", IconMap = Main.LargeIcons, Icon = "Explorer", Open = true, Window = Explorer.Window})
+
 		Main.CreateApp({Name = "属性", IconMap = Main.LargeIcons, Icon = "Properties", Open = true, Window = Properties.Window})
+
 		local cptsOnMouseClick = nil
 		Main.CreateApp({Name = "点击部件选择", IconMap = Explorer.ClassIcons, Icon = "SelectionBox", OnClick = function(callback)
 			if callback then
@@ -15145,10 +14990,14 @@ Main = (function()
 				end)
 			else if cptsOnMouseClick ~= nil then cptsOnMouseClick:Disconnect() cptsOnMouseClick = nil end end
 		end})
+
 		Main.CreateApp({Name = "记事本", IconMap = Main.LargeIcons, Icon = "Script_Viewer", Window = ScriptViewer.Window})
+		
 		Main.CreateApp({Name = "控制台", IconMap = Main.LargeIcons, Icon = "Executor", Window = Console.Window})
+		
 		Main.CreateApp({Name = "保存实例", IconMap = Main.LargeIcons, Icon = "Book", Window = SaveInstance.Window})
-		Main.CreateApp({Name = "3D查看器", IconMap = Main.LargeIcons, Icon = "Object", Window = ModelViewer.Window})
+		
+		Main.CreateApp({Name = "3D 查看器", IconMap = Main.LargeIcons, Icon = "Object", Window = ModelViewer.Window})
 
 		for _, loadedplugin in pairs(Main.Plugins) do
 			Main.CreateApp({Name = loadedplugin.PluginData.FriendlyName, IconMap = Explorer.ClassIcons, Icon = "Attachment", Window = loadedplugin.Window})
@@ -15159,7 +15008,9 @@ Main = (function()
 
 	Main.SetupFilesystem = function()
 		if not env.writefile or not env.makefolder then return end
+
 		local writefile,makefolder = env.writefile,env.makefolder
+
 		makefolder("dex")
 		makefolder("dex/assets")
 		makefolder("dex/saved")
@@ -15186,6 +15037,7 @@ Main = (function()
 		
 		Main.InitEnv()
 		Main.LoadSettings()
+		
 		Main.SetupFilesystem()
 
 		local intro = Main.CreateIntro("正在初始化库")
@@ -15208,7 +15060,7 @@ Main = (function()
 			Explorer = 0, Properties = 1, Script_Viewer = 2, Watcher = 3, Output = 4, ScriptEdit = 5, Book = 6, Executor = 7, Object = 8, Honey = 9
 		})
 
-		intro.SetProgress("正在获取Roblox版本",0.3)
+		intro.SetProgress("正在获取 Roblox 版本",0.3)
 		if Main.Elevated then
 			local fileVer = Lib.ReadFile("dex/deps_version.dat")
 			Main.ClientVersion = Version()
@@ -15218,23 +15070,24 @@ Main = (function()
 					Main.RobloxVersion = Main.DepsVersionData[2]
 				end
 			end
+			
 			Main.RobloxVersion = Main.RobloxVersion or oldgame:HttpGet("https://clientsettings.roblox.com/v2/client-version/WindowsStudio64/channel/LIVE"):match("(version%-[%w]+)")
 		end
 
-		intro.SetProgress("正在获取API",0.35)
+		intro.SetProgress("正在获取 API",0.35)
 		API = Main.FetchAPI(
 			function()
-				intro.SetProgress("正在获取API，请稍候。",0.4)
+				intro.SetProgress("正在获取 API，请稍候。",0.4)
 			end,
 			function()
-				intro.SetProgress("正在获取API，由于API文件较大，请稍候。",0.45)
+				intro.SetProgress("正在获取 API，文件较大请耐心等待。",0.45)
 			end,
 			function()
-				intro.SetProgress("正在获取API，还在下载？网络不好啊xD",0.475)
+				intro.SetProgress("正在获取 API，还在下载？网速有点慢呀",0.475)
 			end
 		)
 		Lib.FastWait()
-		intro.SetProgress("正在获取RMD",0.5)
+		intro.SetProgress("正在获取 RMD",0.5)
 		RMD = Main.FetchRMD()
 		Lib.FastWait()
 
@@ -15258,6 +15111,7 @@ Main = (function()
 		ModelViewer.Init()
 		SettingsWindow.Init()
 		
+		
 		if env.readfile and listfiles then
 			if #listfiles("dex/plugins") > 0 then
 				intro.SetProgress("正在加载插件文件",0.8)
@@ -15270,7 +15124,7 @@ Main = (function()
 					local pluginFriendlyName = moduleData.PluginData.FriendlyName or moduleData.Window.GuiElems.Title.Text or "Unnamed Plugin"
 					local pluginName = moduleData.PluginData.Name or moduleData.Window.GuiElems.Title.Text:gsub(" ", "") or "unnamedPlugin"
 
-					intro.SetProgress("正在初始化插件：".. pluginFriendlyName,0.9)
+					intro.SetProgress("正在初始化插件： ".. pluginFriendlyName,0.9)
 
 					moduleData.PluginData.Name = pluginName
 					moduleData.PluginData.FriendlyName = pluginFriendlyName
@@ -15294,35 +15148,6 @@ Main = (function()
 		Properties.Window:Show({Align = "right", Pos = 2, Size = 0.5, Silent = true})
 		
 		Lib.DeferFunc(function() Lib.Window.ToggleSide("right") end)
-
-		-- ===== 圆形Dex按钮 =====
-		local DexButtonGui = Instance.new("ScreenGui")
-		DexButtonGui.Name = "_DPP_DexButtonGui"
-		DexButtonGui.IgnoreGuiInset = true
-		DexButtonGui.ResetOnSpawn = false
-		Lib.ShowGui(DexButtonGui)
-
-		local DexButton = Instance.new("TextButton")
-		local DexCorner = Instance.new("UICorner")
-		DexButton.Parent = DexButtonGui
-		DexButton.BackgroundColor3 = Color3.fromRGB(37, 36, 38)
-		DexButton.BackgroundTransparency = 0.14
-		DexButton.Position = UDim2.new(0, 10, 0, 10)
-		DexButton.Size = UDim2.new(0, 32, 0, 33)
-		DexButton.Font = Enum.Font.SourceSansBold
-		DexButton.Text = "Dex"
-		DexButton.TextColor3 = Color3.fromRGB(252, 51, 51)
-		DexButton.TextSize = 16
-		DexButton.TextWrapped = true
-		DexButton.ZIndex = 1e9
-		DexButton.Draggable = true
-		DexCorner.CornerRadius = UDim.new(0.5, 0)
-		DexCorner.Parent = DexButton
-
-		DexButton.MouseButton1Click:Connect(function()
-			Main.SetMainGuiOpen(not Main.MainGuiOpen)
-			DexButton.TextColor3 = Main.MainGuiOpen and Color3.fromRGB(255, 255, 255) or Color3.fromRGB(252, 51, 51)
-		end)
 	end
 	
 	Main.Uninit = function()
@@ -15345,7 +15170,4 @@ Main = (function()
 	return Main
 end)()
 
--- Start
 Main.Init()
-
---for i,v in pairs(Main.MissingEnv) do print(i,v) end
