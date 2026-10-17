@@ -47,6 +47,11 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/hygg520/hygg/refs/hea
 loadstring(game:HttpGet("https://raw.githubusercontent.com/hygg520/hygg/refs/heads/main/SimpleSpy.txt"))()
 ```
 
+### 忍者美化工具
+```lua
+loadstring(game:HttpGet("https://raw.githubusercontent.com/hygg520/hygg/refs/heads/main/忍者美化.txt"))()
+```
+
 ### 动画包
 
 #### 阿迪达斯
